@@ -1,0 +1,128 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap");
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Space+Grotesk:wght@300..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap"); */
+
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sofia&display=swap"); */
+
+@import url("https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Figtree", sans-serif;
+}
+
+:root {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+  --pryColor: #2c3e50;
+  --white: #fff;
+  --secColor: #80bbeb;
+  --black: #000000;
+  --Grey1: #352f36;
+  --Grey2: #777777;
+  --positive: #00c46c;
+  --negative: #ee443f;
+}
+
+/* === Pagination styles start ==== */
+.paginContainer {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  font-weight: 400;
+}
+
+.paginContainer a {
+  display: block;
+  width: 30px;
+  height: 30px;
+  color: var(--Grey1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s;
+  border-radius: 5px;
+}
+
+.paginContainer .pageClass a:hover {
+  border-color: var(--secColor);
+  color: var(--secColor);
+  background-color: white;
+  transition: all 0.5s;
+}
+.paginContainer .pageClass a {
+  background-color: var(--white);
+  color: var(--Grey2);
+}
+.paginContainer .activePage a {
+  border-color: var(--secColor);
+  color: var(--secColor);
+  border: 1px solid #80bbeb;
+}
+
+.paginContainer .prev a,
+.paginContainer .next a {
+  background-color: var(--white);
+  color: #8e949a;
+  border: 1px solid #8e949a;
+}
+
+.paginContainer .disabled a {
+  pointer-events: none;
+  background-color: #ebeff2;
+  color: var(--Grey5);
+  border: 1px solid lightgrey;
+}
+
+/* === Pagination styles end ==== */
+
+.centered-box {
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.left-box {
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+}
+
+[data-column-id="image"].rdt_TableCol {
+  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: start;
+}
+
+.form-controls {
+  display: block;
+  width: 100%;
+  padding: 0.77em 1em;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #f1f2f3;
+  background-clip: padding-box;
+  border: none;
+  border-radius: 12px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+/*google place*/
+
+.css-13cymwt-control {
+  padding-block: 5px;
+  border-radius: 10px !important;
+  border-color: #2c3e50 !important;
+}

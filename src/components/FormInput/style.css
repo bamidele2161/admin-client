@@ -1,0 +1,57 @@
+.errorMsg {
+  color: red;
+  font-size: 12px;
+  display: flex;
+  align-items: start;
+  text-align: left;
+}
+.shortP {
+  font-size: 14px;
+  font-weight: 400;
+  color: #b4b4b4;
+  text-align: right;
+}
+.form-controls {
+  display: block;
+  width: 100%;
+  padding: 0.77em 1em;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #f1f2f3;
+  background-clip: padding-box;
+  border: none;
+  border-radius: 12px;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.labelClassName {
+  font-size: 14px;
+  font-weight: 500;
+  color: black;
+}
+textarea:focus,
+select:focus,
+input:focus {
+  border: solid 1px var(--pryColor);
+  outline: 0;
+  border-radius: 12px;
+}
+textarea::placeholder,
+input::placeholder {
+  color: #b4b4b4;
+  font-size: 14px;
+  font-weight: 500;
+}
+.required {
+  color: red;
+  margin: 0;
+  padding: 0;
+}
+.react-tel-input .form-control {
+  border: 1px solid #ced4da;
+  width: 100% !important;
+  height: unset !important;
+}
+.form-controls:disabled {
+  opacity: 0.3 !important;
+}
