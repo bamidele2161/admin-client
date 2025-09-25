@@ -4,9 +4,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        // pryColor: { DEFAULT: "#0E0C60", Light: "#F8FBFE" },
         pryColor: { DEFAULT: "#254A76", Light: "#D1E2C4", Lighter: "#E7E7E6" },
-        // secColor: "#DBB950",
         secColor: {
           DEFAULT: "#80BBEB ",
           Light: "#E6F2FB",
@@ -33,9 +31,7 @@ export default {
     function ({ addUtilities }) {
       addUtilities({
         ".no-scrollbar": {
-          /* For Firefox */
           scrollbarWidth: "none",
-          /* For Chrome, Safari, and Opera */
           "&::-webkit-scrollbar": {
             display: "none",
           },
