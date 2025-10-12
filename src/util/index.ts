@@ -743,7 +743,7 @@ export const LogoutAdmin = (navigate: any) => {
   sessionStorage.clear();
 
   persistor.purge();
-  navigate("/admin-signin");
+  navigate("/");
 
   window.location.reload();
 };

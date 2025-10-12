@@ -14,12 +14,14 @@ const OrderOverview = () => {
   const [showModal, setShowModal] = useState(false);
   const [updateModal, setUpdateModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState<any>();
-  const { data, refetch } = useGetAllOrdersQuery();
+  const { data, refetch } = useGetAllOrdersQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
   const [updateOrderStatus, { isLoading }] = useUpdateOrderStatusMutation();
   const handleSearch = (e: any) => {
     setSearchTerm(e.target.value);
   };
-
+  console.log(data);
   const handleViewOrder = (order: any) => {
     setSelectedOrder(order);
     setShowModal(true);

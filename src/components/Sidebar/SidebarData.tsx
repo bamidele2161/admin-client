@@ -10,6 +10,7 @@ import {
   FileText,
   Users,
   Settings,
+  Wallet,
 } from "lucide-react";
 
 export const SidebarData = [
@@ -90,6 +91,12 @@ export const adminSidebarData = [
   },
   {
     id: "tab7",
+    icon: Wallet,
+    title: "Payout Mgt",
+    url: "/admin-payouts",
+  },
+  {
+    id: "tab8",
     icon: Settings,
     title: "Settings",
     url: "/admin-settings",

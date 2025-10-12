@@ -112,6 +112,35 @@ export const adminApi = createApi({
 
       invalidatesTags: [{ type: "Products", id: "Products" }],
     }),
+
+    // Payout endpoints
+    getAllPayouts: builder.query<any, void>({
+      query: () => `/payouts`,
+      providesTags: [{ type: "Vendor", id: "Payouts" }],
+    }),
+
+    getVendorPayouts: builder.query<any, number>({
+      query: (vendorId) => `/payouts/vendor/${vendorId}`,
+      providesTags: [{ type: "Vendor", id: "Payouts" }],
+    }),
+
+    markVendorPayout: builder.mutation<
+      any,
+      {
+        vendorId: number;
+        amount: number;
+        reference: string;
+        receiptUrl?: string;
+        notes?: string;
+      }
+    >({
+      query: (body) => ({
+        url: `/payouts/mark-vendor-payout`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: [{ type: "Vendor", id: "Payouts" }],
+    }),
   }),
 });
 
@@ -121,4 +150,7 @@ export const {
   useGetAllProductsQuery,
   useUpdateProductMutation,
   useUpdateOrderStatusMutation,
+  useGetAllPayoutsQuery,
+  useGetVendorPayoutsQuery,
+  useMarkVendorPayoutMutation,
 } = adminApi;
