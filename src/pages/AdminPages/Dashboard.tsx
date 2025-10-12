@@ -1,36 +1,93 @@
 import { Link } from "react-router-dom";
+import { useMemo } from "react";
 
 import {
   BarChart,
   Bar,
   XAxis,
   YAxis,
-  // CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  Cell,
 } from "recharts";
 import Navbar from "../../components/Navbar/Navbar";
 import { useGetAllUsersQuery } from "../../service/auth";
 import { useGetAllVendorsQuery } from "../../service/admin";
 import { useGetAllOrdersQuery } from "../../service/product";
 
-const salesData = [
-  { name: "Jan", sales: 4000 },
-  { name: "Feb", sales: 3000 },
-  { name: "Mar", sales: 2000 },
-  { name: "Apr", sales: 2780 },
-  { name: "May", sales: 1890 },
-  { name: "Jun", sales: 2390 },
-];
+interface Order {
+  id: number;
+  totalAmount: number;
+  createdAt: string;
+  status: string;
+}
 
 const AdminDashboard = () => {
   const { data: users } = useGetAllUsersQuery();
   const { data } = useGetAllVendorsQuery();
   const { data: orders } = useGetAllOrdersQuery();
+
   const totalRevenue = orders?.data?.reduce(
-    (sum: number, order: any) => sum + order?.totalAmount,
+    (sum: number, order: Order) => sum + order?.totalAmount,
     0
   );
+
+  // Process orders data to get monthly sales
+  const salesData = useMemo(() => {
+    if (!orders?.data) return [];
+
+    const monthlyData: { [key: string]: number } = {};
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+
+    // Initialize all months with 0
+    monthNames.forEach((month) => {
+      monthlyData[month] = 0;
+    });
+
+    // Aggregate sales by month
+    orders.data.forEach((order: Order) => {
+      const date = new Date(order.createdAt);
+      const monthIndex = date.getMonth();
+      const monthName = monthNames[monthIndex];
+      monthlyData[monthName] += order.totalAmount;
+    });
+
+    // Convert to array format for recharts
+    return monthNames.map((month) => ({
+      name: month,
+      sales: monthlyData[month],
+    }));
+  }, [orders?.data]);
+
+  // Colors for the bars
+  const barColors = [
+    "#8884d8",
+    "#82ca9d",
+    "#ffc658",
+    "#ff7300",
+    "#00ff00",
+    "#ff00ff",
+    "#00ffff",
+    "#ff0000",
+    "#0000ff",
+    "#ffff00",
+    "#ff8000",
+    "#8000ff",
+  ];
+
   return (
     <div className="flex flex-col">
       <Navbar title="Admin Dashboard" subtitle="Manage your products here" />
@@ -102,19 +159,62 @@ const AdminDashboard = () => {
         {/* Sales Chart */}
         <div className="lg:col-span-2 bg-white p-6 rounded-lg shadow-default">
           <h2 className="text-lg font-semibold mb-4 text-greyColr">
-            Monthly Sales
+            Monthly Sales Revenue
           </h2>
           <div className="h-96">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
                 data={salesData}
-                margin={{ top: 2, right: 30, left: 20 }}
+                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
               >
-                {/* <CartesianGrid strokeDasharray="3 3" /> */}
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Bar dataKey="sales" fill="#80BBEB" />
+                {/* <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" /> */}
+                <XAxis
+                  dataKey="name"
+                  tick={{ fontSize: 12, fill: "#666" }}
+                  axisLine={{ stroke: "#e0e0e0" }}
+                />
+                <YAxis
+                  tick={{ fontSize: 12, fill: "#666" }}
+                  axisLine={{ stroke: "#e0e0e0" }}
+                  tickFormatter={(value) => `₦${(value / 1000).toFixed(0)}k`}
+                />
+                <Tooltip
+                  formatter={(value: number) => [
+                    `₦${value.toLocaleString()}`,
+                    "Revenue",
+                  ]}
+                  labelStyle={{ color: "#333" }}
+                  contentStyle={{
+                    backgroundColor: "#fff",
+                    border: "1px solid #e0e0e0",
+                    borderRadius: "8px",
+                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                  }}
+                />
+                <Bar
+                  dataKey="sales"
+                  radius={[4, 4, 0, 0]}
+                  fill="url(#colorGradient)"
+                >
+                  {salesData.map((_, index) => (
+                    <Cell
+                      key={`cell-${index}`}
+                      fill={barColors[index % barColors.length]}
+                    />
+                  ))}
+                </Bar>
+                <defs>
+                  <linearGradient
+                    id="colorGradient"
+                    x1="0"
+                    y1="0"
+                    x2="0"
+                    y2="1"
+                  >
+                    <stop offset="5%" stopColor="#80BBEB" stopOpacity={0.8} />
+                    <stop offset="95%" stopColor="#80BBEB" stopOpacity={0.3} />
+                  </linearGradient>
+                </defs>
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -142,11 +242,6 @@ const AdminDashboard = () => {
                 Summer dress (SKU: 58392)
               </p>
               <p className="text-xs text-lightGreyColor">12 hours ago</p>
-            </div>
-            <div className="border-l-4 border-processing-DEFAULT pl-4 py-1">
-              <p className="font-medium text-greyColr">New admin added</p>
-              <p className="text-sm text-lightGreyColor">Sarah Johnson</p>
-              <p className="text-xs text-lightGreyColor">Yesterday</p>
             </div>
           </div>
 

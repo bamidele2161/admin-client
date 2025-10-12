@@ -39,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed, toggleSidebar }) => {
         >
           <VendorBrandIcon className="w-14" />
           {!collapsed && (
-            <h1 className="font-bold text-xl text-white">ashoBox</h1>
+            <h1 className="font-bold text-xl text-white">ashobox</h1>
           )}
         </div>
 
