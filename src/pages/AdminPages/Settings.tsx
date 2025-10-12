@@ -7,7 +7,6 @@ const AdminSettings = () => {
   const [activeTab, setActiveTab] = useState("profile");
   const { userInfo } = useAppSelector(selectAuth);
 
-  console.log(userInfo);
   const [formData, setFormData] = useState({
     adminName: userInfo?.fullName,
     email: userInfo?.email,
