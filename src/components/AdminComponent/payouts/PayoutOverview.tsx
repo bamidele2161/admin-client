@@ -5,6 +5,11 @@ import {
   useGetAllVendorsQuery,
 } from "../../../service/admin";
 
+interface VendorData {
+  id: number;
+  businessName: string;
+}
+
 interface PayoutData {
   id: number;
   reference: string;
@@ -50,8 +55,9 @@ const PayoutOverview = () => {
     {
       name: "Vendor",
       selector: (row: PayoutData) =>
-        vendorsData?.data?.find((vendor) => vendor.id === row.recipientId)
-          ?.businessName || `ID: ${row.recipientId}`,
+        vendorsData?.data?.find(
+          (vendor: VendorData) => vendor.id === row.recipientId
+        )?.businessName || `ID: ${row.recipientId}`,
       sortable: true,
       width: "180px",
     },
@@ -265,7 +271,8 @@ const PayoutOverview = () => {
                   </label>
                   <p className="mt-1 text-sm text-gray-900">
                     {vendorsData?.data?.find(
-                      (vendor) => vendor.id === selectedPayout.recipientId
+                      (vendor: VendorData) =>
+                        vendor.id === selectedPayout.recipientId
                     )?.businessName || `ID: ${selectedPayout.recipientId}`}
                   </p>
                 </div>

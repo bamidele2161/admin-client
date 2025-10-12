@@ -62,7 +62,7 @@ export const adminApi = createApi({
   reducerPath: "adminApi",
   baseQuery: customBaseQuery,
 
-  tagTypes: ["Vendor", "Products"],
+  tagTypes: ["Vendor", "Products", "Reports"],
 
   endpoints: (builder) => ({
     getAllVendors: builder.query<any, void>({
@@ -141,6 +141,22 @@ export const adminApi = createApi({
       }),
       invalidatesTags: [{ type: "Vendor", id: "Payouts" }],
     }),
+
+    // Reports endpoints
+    getFinancialSummary: builder.query<any, void>({
+      query: () => `/reports/financial-summary`,
+      providesTags: [{ type: "Reports", id: "FinancialSummary" }],
+    }),
+
+    getLedgerReport: builder.query<any, void>({
+      query: () => `/reports/ledger`,
+      providesTags: [{ type: "Reports", id: "Ledger" }],
+    }),
+
+    getVendorsReport: builder.query<any, void>({
+      query: () => `/reports/vendors`,
+      providesTags: [{ type: "Reports", id: "VendorsReport" }],
+    }),
   }),
 });
 
@@ -153,4 +169,7 @@ export const {
   useGetAllPayoutsQuery,
   useGetVendorPayoutsQuery,
   useMarkVendorPayoutMutation,
+  useGetFinancialSummaryQuery,
+  useGetLedgerReportQuery,
+  useGetVendorsReportQuery,
 } = adminApi;

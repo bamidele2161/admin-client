@@ -6,6 +6,7 @@ import UserManagement from "../pages/AdminPages/users/UserManagement";
 import VendorManagement from "../pages/AdminPages/vendors/VendorManagement";
 import ContentManagement from "../pages/AdminPages/content/ContentManagement";
 import PayoutManagement from "../pages/AdminPages/payouts/PayoutManagement";
+import ReportsManagement from "../pages/AdminPages/reports/ReportsManagement";
 import AdminDashboard from "../pages/AdminPages/Dashboard";
 import AdminSettings from "../pages/AdminPages/Settings";
 import AdminAuth from "../pages/AdminPages/Auth/Auth";
@@ -39,6 +40,7 @@ const adminRoutes: Route[] = [
 
   { path: "/admin-content", name: "Discount", element: <ContentManagement /> },
   { path: "/admin-payouts", name: "Payouts", element: <PayoutManagement /> },
+  { path: "/admin-reports", name: "Reports", element: <ReportsManagement /> },
   { path: "/admin-settings", name: "Settings", element: <AdminSettings /> },
 ];
 export { authRoutes, adminRoutes };

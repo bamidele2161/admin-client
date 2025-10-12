@@ -11,6 +11,7 @@ import {
   Users,
   Settings,
   Wallet,
+  BarChart3,
 } from "lucide-react";
 
 export const SidebarData = [
@@ -97,6 +98,12 @@ export const adminSidebarData = [
   },
   {
     id: "tab8",
+    icon: BarChart3,
+    title: "Reports",
+    url: "/admin-reports",
+  },
+  {
+    id: "tab9",
     icon: Settings,
     title: "Settings",
     url: "/admin-settings",
