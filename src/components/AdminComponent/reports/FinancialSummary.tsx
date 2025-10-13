@@ -33,7 +33,7 @@ const FinancialSummary: React.FC = () => {
   }
 
   const financialData: FinancialData = data?.data;
-
+  console.log(financialData);
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-NG", {
       style: "currency",

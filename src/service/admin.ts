@@ -157,6 +157,11 @@ export const adminApi = createApi({
       query: () => `/reports/vendors`,
       providesTags: [{ type: "Reports", id: "VendorsReport" }],
     }),
+
+    getActivityLogs: builder.query<any, void>({
+      query: () => `/activity-logs/system`,
+      providesTags: [{ type: "Reports", id: "ActivityLogs" }],
+    }),
   }),
 });
 
@@ -172,4 +177,5 @@ export const {
   useGetFinancialSummaryQuery,
   useGetLedgerReportQuery,
   useGetVendorsReportQuery,
+  useGetActivityLogsQuery,
 } = adminApi;
