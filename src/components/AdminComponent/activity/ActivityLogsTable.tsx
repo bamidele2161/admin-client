@@ -87,18 +87,18 @@ const ActivityLogsTable: React.FC = () => {
     }
   };
 
-  const getActionIcon = (action: string) => {
-    switch (action) {
-      case "USER_LOGIN":
-        return <User className="h-4 w-4" />;
-      case "PAYOUT_CREATED":
-        return <Activity className="h-4 w-4" />;
-      case "PRODUCT_ARCHIVED":
-        return <Eye className="h-4 w-4" />;
-      default:
-        return <Activity className="h-4 w-4" />;
-    }
-  };
+  // const getActionIcon = (action: string) => {
+  //   switch (action) {
+  //     case "USER_LOGIN":
+  //       return <User className="h-4 w-4" />;
+  //     case "PAYOUT_CREATED":
+  //       return <Activity className="h-4 w-4" />;
+  //     case "PRODUCT_ARCHIVED":
+  //       return <Eye className="h-4 w-4" />;
+  //     default:
+  //       return <Activity className="h-4 w-4" />;
+  //   }
+  // };
 
   const columns = [
     {
@@ -127,7 +127,7 @@ const ActivityLogsTable: React.FC = () => {
       selector: (row: ActivityLog) => row.action,
       cell: (row: ActivityLog) => (
         <div className="flex items-center">
-          <div className="flex-shrink-0 mr-2">{getActionIcon(row.action)}</div>
+          {/* <div className="flex-shrink-0 mr-2">{getActionIcon(row.action)}</div> */}
           <span
             className={`px-3 py-1 rounded-full text-xs font-medium border ${getActionColor(
               row.action
@@ -171,7 +171,6 @@ const ActivityLogsTable: React.FC = () => {
       selector: (row: ActivityLog) => row.createdAt,
       cell: (row: ActivityLog) => (
         <div className="flex items-center text-sm text-gray-600">
-          <Calendar className="h-4 w-4 mr-1" />
           {formatDate(row.createdAt)}
         </div>
       ),
