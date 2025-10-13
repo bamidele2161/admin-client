@@ -365,7 +365,7 @@ const AdminDashboard = () => {
                           {formatTimeAgo(activity.createdAt)}
                         </div>
                       </div>
-                      <p className="text-sm text-lightGreyColor mt-1 line-clamp-2">
+                      <p className="text-xs text-lightGreyColor mt-1 line-clamp-2">
                         {activity.details}
                       </p>
                       <div className="flex items-center gap-2 mt-2 text-[10px] text-lightGreyColor">
