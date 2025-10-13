@@ -395,7 +395,7 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Link
             to="/admin/users"
-            className="group relative overflow-hidden bg-gradient-to-br from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            className="group relative overflow-hidden bg-gradient-to-br from-blue-300 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
             <div className="flex items-center justify-between">
               <div>
@@ -410,7 +410,7 @@ const AdminDashboard = () => {
 
           <Link
             to="/admin/vendors"
-            className="group relative overflow-hidden bg-gradient-to-br from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            className="group relative overflow-hidden bg-gradient-to-br from-emerald-300 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
             <div className="flex items-center justify-between">
               <div>
@@ -427,7 +427,7 @@ const AdminDashboard = () => {
 
           <Link
             to="/admin-order-management"
-            className="group relative overflow-hidden bg-gradient-to-br from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            className="group relative overflow-hidden bg-gradient-to-br from-purple-300 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
           >
             <div className="flex items-center justify-between">
               <div>
