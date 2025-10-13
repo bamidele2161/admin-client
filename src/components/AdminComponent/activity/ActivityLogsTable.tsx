@@ -2,14 +2,7 @@ import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
 import { Card } from "../../Cards/Cards";
 import { useGetActivityLogsQuery } from "../../../service/admin";
-import {
-  Search,
-  Activity,
-  ChevronDown,
-  User,
-  Calendar,
-  Eye,
-} from "lucide-react";
+import { Search, Activity, ChevronDown, User } from "lucide-react";
 
 interface ActivityLog {
   id: number;
