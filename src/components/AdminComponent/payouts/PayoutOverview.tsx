@@ -29,9 +29,21 @@ const PayoutOverview = () => {
   const [filteredData, setFilteredData] = useState<PayoutData[]>([]);
   const [selectedPayout, setSelectedPayout] = useState<PayoutData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { data: vendorsData } = useGetAllVendorsQuery();
+  const { data: vendorsData } = useGetAllVendorsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
 
-  const { data: payoutsData, isLoading, error } = useGetAllPayoutsQuery();
+  const {
+    data: payoutsData,
+    isLoading,
+    error,
+  } = useGetAllPayoutsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
 
   useEffect(() => {
     if (payoutsData?.data) {

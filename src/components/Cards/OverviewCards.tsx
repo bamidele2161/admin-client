@@ -29,8 +29,8 @@ export default function OverviewCards() {
       value: `${new Intl.NumberFormat("en-NG", {
         style: "currency",
         currency: "NGN",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
       }).format(subtotal)}`,
       icon: <DollarSign size={28} className="text-green-600" />,
       bgColor: "bg-green-50",

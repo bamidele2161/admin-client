@@ -58,7 +58,11 @@ const VendorApproval = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalAction, setModalAction] = useState("");
   const [rejectionReason, setRejectionReason] = useState("");
-  const { data } = useGetAllVendorsQuery();
+  const { data } = useGetAllVendorsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
   const [updateVendor, { isLoading }] = useUpdateVendorMutation();
   const handleSearch = (e: any) => {
     setSearchTerm(e.target.value);

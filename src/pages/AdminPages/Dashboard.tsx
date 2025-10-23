@@ -2,13 +2,12 @@ import { Link } from "react-router-dom";
 import { useMemo } from "react";
 
 import {
-  BarChart,
-  Bar,
+  AreaChart,
+  Area,
   XAxis,
   YAxis,
   Tooltip,
   ResponsiveContainer,
-  Cell,
 } from "recharts";
 import {
   Activity,
@@ -49,11 +48,27 @@ interface ActivityLog {
 }
 
 const AdminDashboard = () => {
-  const { data: users } = useGetAllUsersQuery();
-  const { data } = useGetAllVendorsQuery();
-  const { data: orders } = useGetAllOrdersQuery();
+  const { data: users } = useGetAllUsersQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
+  const { data } = useGetAllVendorsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
+  const { data: orders } = useGetAllOrdersQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
   const { data: activityLogs, isLoading: isLoadingActivity } =
-    useGetActivityLogsQuery();
+    useGetActivityLogsQuery(undefined, {
+      refetchOnMountOrArgChange: true,
+      refetchOnFocus: true,
+      refetchOnReconnect: true,
+    });
 
   const totalRevenue = orders?.data?.reduce(
     (sum: number, order: Order) => sum + order?.totalAmount,
@@ -163,22 +178,6 @@ const AdminDashboard = () => {
     }));
   }, [orders?.data]);
 
-  // Colors for the bars
-  const barColors = [
-    "#8884d8",
-    "#82ca9d",
-    "#ffc658",
-    "#ff7300",
-    "#00ff00",
-    "#ff00ff",
-    "#00ffff",
-    "#ff0000",
-    "#0000ff",
-    "#ffff00",
-    "#ff8000",
-    "#8000ff",
-  ];
-
   return (
     <div className="flex flex-col">
       <Navbar title="Admin Dashboard" subtitle="Manage your products here" />
@@ -235,7 +234,12 @@ const AdminDashboard = () => {
             Total Revenue
           </h3>
           <p className="text-2xl font-bold text-greyColr">
-            ₦{totalRevenue || 0}
+            {new Intl.NumberFormat("en-NG", {
+              style: "currency",
+              currency: "NGN",
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(totalRevenue || 0)}
           </p>
           <div className="flex items-center mt-2">
             <span className="text-positive-DEFAULT text-sm">+8%</span>
@@ -254,11 +258,10 @@ const AdminDashboard = () => {
           </h2>
           <div className="h-96">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart
+              <AreaChart
                 data={salesData}
                 margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
               >
-                {/* <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" /> */}
                 <XAxis
                   dataKey="name"
                   tick={{ fontSize: 12, fill: "#666" }}
@@ -282,31 +285,15 @@ const AdminDashboard = () => {
                     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                   }}
                 />
-                <Bar
+                <Area
+                  type="monotone"
                   dataKey="sales"
-                  radius={[4, 4, 0, 0]}
-                  fill="url(#colorGradient)"
-                >
-                  {salesData.map((_, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={barColors[index % barColors.length]}
-                    />
-                  ))}
-                </Bar>
-                <defs>
-                  <linearGradient
-                    id="colorGradient"
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="5%" stopColor="#80BBEB" stopOpacity={0.8} />
-                    <stop offset="95%" stopColor="#80BBEB" stopOpacity={0.3} />
-                  </linearGradient>
-                </defs>
-              </BarChart>
+                  stroke="#254A76"
+                  fill="#80BBEB"
+                  fillOpacity={0.6}
+                  strokeWidth={2}
+                />
+              </AreaChart>
             </ResponsiveContainer>
           </div>
         </div>

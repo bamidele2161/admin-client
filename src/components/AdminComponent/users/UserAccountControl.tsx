@@ -60,7 +60,11 @@ const UserAccountControl = () => {
   const [selectedUser, setSelectedUser] = useState<any>();
   const [showModal, setShowModal] = useState(false);
   const [modalAction, setModalAction] = useState("");
-  const { data } = useGetAllUsersQuery();
+  const { data } = useGetAllUsersQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
   const handleSearch = (e: any) => {
     setSearchTerm(e.target.value);
   };

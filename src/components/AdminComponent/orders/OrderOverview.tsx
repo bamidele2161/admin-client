@@ -16,6 +16,8 @@ const OrderOverview = () => {
   const [selectedOrder, setSelectedOrder] = useState<any>();
   const { data, refetch } = useGetAllOrdersQuery(undefined, {
     refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
   });
   const [updateOrderStatus, { isLoading }] = useUpdateOrderStatusMutation();
   const handleSearch = (e: any) => {
@@ -235,7 +237,12 @@ const OrderOverview = () => {
         <div className="bg-secColor-Light p-4 rounded-lg">
           <h3 className="text-sm font-medium text-greyColr">Total Revenue</h3>
           <div className="text-2xl font-bold text-secColor mt-2">
-            ₦{totalRevenue?.toFixed(2)}
+            {new Intl.NumberFormat("en-NG", {
+              style: "currency",
+              currency: "NGN",
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            }).format(totalRevenue)}
           </div>
         </div>
 

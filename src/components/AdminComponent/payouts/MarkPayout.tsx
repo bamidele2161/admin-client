@@ -34,7 +34,11 @@ const MarkPayout = () => {
   const [receipt, setReceipt] = useState("");
   const [markVendorPayout] = useMarkVendorPayoutMutation();
   const { data: vendorsData, isLoading: vendorsLoading } =
-    useGetAllVendorsQuery();
+    useGetAllVendorsQuery(undefined, {
+      refetchOnMountOrArgChange: true,
+      refetchOnFocus: true,
+      refetchOnReconnect: true,
+    });
 
   const handleInputChange = (
     e: React.ChangeEvent<

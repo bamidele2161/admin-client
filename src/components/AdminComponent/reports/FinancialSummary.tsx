@@ -44,7 +44,12 @@ const FinancialSummary: React.FC = () => {
   const cards = [
     {
       title: "Total Revenue",
-      value: formatCurrency(financialData?.totalRevenue || 0),
+      value: new Intl.NumberFormat("en-NG", {
+        style: "currency",
+        currency: "NGN",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(financialData?.totalRevenue || 0),
       icon: DollarSign,
       color: "bg-green",
     },

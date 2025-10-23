@@ -96,7 +96,11 @@ import { toast } from "react-toastify";
 // ];
 
 const CategoryManagement = () => {
-  const { data } = useGetAllProductCategoryQuery();
+  const { data } = useGetAllProductCategoryQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
   const [addCategory] = useAddCategoryMutation();
   const [addSubCategory] = useAddSubCategoryMutation();
   const [addSubCategoryItem] = useAddSubCategoryItemsMutation();

@@ -14,8 +14,16 @@ const ProductModeration = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalAction, setModalAction] = useState("");
   const [rejectionReason, setRejectionReason] = useState("");
-  const { data, refetch } = useGetAllProductsQuery();
-  const { data: categories } = useGetAllProductCategoryQuery();
+  const { data, refetch } = useGetAllProductsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
+  const { data: categories } = useGetAllProductCategoryQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
   const [updateVendor, { isLoading }] = useUpdateProductMutation();
   console.log(data);
   const handleSearch = (e: any) => {
