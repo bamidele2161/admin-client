@@ -94,6 +94,7 @@ export const productApi = createApi({
 
       invalidatesTags: [{ type: "Product", id: "Product" }],
     }),
+    //editproduct
     editproduct: builder.mutation<any, { body: any; productId: number }>({
       query: ({ body, productId }) => ({
         url: `/products/${productId}`,
@@ -101,6 +102,19 @@ export const productApi = createApi({
         body,
       }),
 
+      invalidatesTags: [{ type: "Product", id: "Product" }],
+    }),
+
+    // update product tags
+    updateProductTags: builder.mutation<
+      any,
+      { productId: number; body: { tags: string[] } }
+    >({
+      query: ({ productId, body }) => ({
+        url: `/products/${productId}/tags`,
+        method: "PATCH",
+        body,
+      }),
       invalidatesTags: [{ type: "Product", id: "Product" }],
     }),
 
@@ -334,4 +348,5 @@ export const {
   useIncrementViewsMutation,
   useGetAllMostViewedProductsQuery,
   useEditproductMutation,
+  useUpdateProductTagsMutation,
 } = productApi;

@@ -1,19 +1,23 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
 import { Check, X, Eye, AlertCircle, ChevronDown } from "lucide-react";
-import { useGetAllProductCategoryQuery } from "../../../service/product";
+import {
+  useGetAllProductCategoryQuery,
+  useUpdateProductTagsMutation,
+} from "../../../service/product";
 import { useGetAllProductsQuery } from "../../../service/admin";
 import { toast } from "react-toastify";
 import { useUpdateProductMutation } from "../../../service/admin";
-import Spinner from "../../Spinner/Spinner";
+import ProductModerationModal from "./ProductModerationModal";
 
-const ProductModeration = () => {
+function ProductModeration() {
   const [searchTerm, setSearchTerm] = useState("");
   const [categoryFilter, setCategoryFilter] = useState("ALL");
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
   const [showModal, setShowModal] = useState(false);
   const [modalAction, setModalAction] = useState("");
   const [rejectionReason, setRejectionReason] = useState("");
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const { data, refetch } = useGetAllProductsQuery(undefined, {
     refetchOnMountOrArgChange: true,
     refetchOnFocus: true,
@@ -25,16 +29,12 @@ const ProductModeration = () => {
     refetchOnReconnect: true,
   });
   const [updateVendor, { isLoading }] = useUpdateProductMutation();
-  console.log(data);
+  const [updateProductTags, { isLoading: isUpdatingTags }] =
+    useUpdateProductTagsMutation();
+
   const handleSearch = (e: any) => {
     setSearchTerm(e.target.value);
   };
-
-  // const handleView = (product: any) => {
-  //   setSelectedProduct(product);
-  //   setModalAction("view");
-  //   setShowModal(true);
-  // };
 
   const handleAction = (product: any, action: string) => {
     setSelectedProduct(product);
@@ -42,19 +42,42 @@ const ProductModeration = () => {
     if (action === "reject") {
       setRejectionReason("");
     }
+    if (action === "view") {
+      const incomingTags = Array.isArray(product?.tags) ? product.tags : [];
+      setSelectedTags(incomingTags);
+    }
     setShowModal(true);
   };
 
+  const toggleTag = (value: string) => {
+    setSelectedTags((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    );
+  };
+
+  const handleUpdateTags = async () => {
+    if (!selectedProduct?.id) return;
+    try {
+      const response = await updateProductTags({
+        productId: selectedProduct.id,
+        body: { tags: selectedTags },
+      });
+      toast.success(response?.data?.message || "Tags updated successfully");
+      refetch();
+    } catch (error: any) {
+      toast.error(error?.data?.message || "Failed to update tags");
+    }
+  };
   const handleModalAction = async () => {
     try {
       let response;
-      // In a real app, you would call your API/Redux action here
+
       if (modalAction === "approve") {
         console.log(`Approving product:`, selectedProduct);
         response = await updateVendor({
           id: selectedProduct.id,
           body: { status: "Approved" },
-        });
+        }).unwrap();
         toast.success(response?.data?.message);
         refetch();
       } else if (modalAction === "reject") {
@@ -68,7 +91,7 @@ const ProductModeration = () => {
         response = await updateVendor({
           id: selectedProduct.id,
           body: { status: "Rejected" },
-        });
+        }).unwrap();
         toast.success(response?.data?.message);
         refetch();
       }
@@ -180,19 +203,11 @@ const ProductModeration = () => {
     .flatMap((subCategory: any) => subCategory.items)
     .map((item: any) => ({ id: item.id, name: item.name }));
 
-  // const handleApprove = (product: { id: number; name: string }) => {
-  //   setSelectedProduct(product);
-  //   // setShowApproveModal(true);
-  // };
-
-  // const handleReject = (product: { id: number; name: string }) => {
-  //   setSelectedProduct(product);
-  //   // setRejectReason('');
-  //   // setShowRejectModal(true);
-  // };
   const getPendingProducts = data?.data?.filter(
     (product: any) => product.status === "Active"
   );
+
+  console.log(selectedProduct);
   return (
     <div className="bg-white p-6 rounded-lg shadow">
       <div className="flex flex-col md:flex-row justify-between items-center mb-6">
@@ -253,160 +268,22 @@ const ProductModeration = () => {
 
       {/* Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-[700px]">
-            <h3 className="text-lg font-semibold mb-4 text-greyColr">
-              {modalAction === "view"
-                ? "Product Details"
-                : modalAction === "approve"
-                ? "Approve Product"
-                : "Reject Product"}
-            </h3>
-
-            <div className="mb-4">
-              <div className="flex justify-center items-center w-full mb-4">
-                <img
-                  src={selectedProduct?.thumbnails[0]}
-                  alt="Product Image"
-                  className="w-32 h-32 object-cover rounded"
-                />
-              </div>
-
-              <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <p className="mb-2 text-sm">
-                    <span className="font-semibold">Product:</span>{" "}
-                    {selectedProduct?.name}
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-2 text-sm">
-                    <span className="font-semibold">Price:</span>{" "}
-                    {selectedProduct?.price}
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-2 text-sm">
-                    <span className="font-semibold">Category:</span>{" "}
-                    {selectedProduct?.subCategoryItemName}
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-2 text-sm">
-                    <span className="font-semibold">Stock:</span>{" "}
-                    {selectedProduct?.stock}
-                  </p>
-                </div>
-
-                <div className="md:col-span-2">
-                  <p className="mb-2 text-sm">
-                    <span className="font-semibold">Description:</span>{" "}
-                    {selectedProduct?.description}
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-2 text-sm">
-                    <span className="font-semibold">Views:</span>{" "}
-                    {selectedProduct?.views}
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-2 flex gap-2 text-sm">
-                    <span className="font-semibold">Status:</span>{" "}
-                    <p
-                      className={`
-                              px-3 py-1 rounded-full text-xs font-semibold        ${
-                                selectedProduct?.status === "Active"
-                                  ? "w-32"
-                                  : "w-20"
-                              } 
-                              ${
-                                selectedProduct?.status === "Approved"
-                                  ? "bg-green-100 text-green-700"
-                                  : selectedProduct?.status === "Active"
-                                  ? "bg-yellow-100 text-yellow-600"
-                                  : "bg-orange-100 text-orange-700"
-                              }
-                            `}
-                    >
-                      {selectedProduct?.status === "Active"
-                        ? "Pending Approval"
-                        : selectedProduct?.status}
-                    </p>
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-2 text-sm">
-                    <span className="font-semibold">Material:</span>{" "}
-                    {selectedProduct?.material}
-                  </p>
-                </div>
-                <div>
-                  <p className="mb-2 text-sm">
-                    <span className="font-semibold">Submitted On:</span>{" "}
-                    {selectedProduct?.createdAt.slice(0, 10)}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {modalAction === "reject" && (
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-lightGreyColor mb-1">
-                  Rejection Reason
-                </label>
-                <textarea
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-pryColor"
-                  rows={3}
-                  value={rejectionReason}
-                  onChange={(e) => setRejectionReason(e.target.value)}
-                  placeholder="Please provide a reason for rejection..."
-                />
-              </div>
-            )}
-
-            {modalAction !== "view" && (
-              <p className="mb-6 text-sm text-lightGreyColor">
-                {modalAction === "approve"
-                  ? "Approving this product will make it visible to customers on the marketplace."
-                  : "The rejection reason will be sent to the vendor via email."}
-              </p>
-            )}
-
-            <div className="flex justify-end space-x-3">
-              <button
-                onClick={() => setShowModal(false)}
-                className="px-4 py-2 border text-sm border-gray-300 rounded-md text-lightGreyColor hover:bg-gray-100"
-              >
-                {modalAction === "view" ? "Close" : "Cancel"}
-              </button>
-              {modalAction !== "view" && (
-                <button
-                  onClick={handleModalAction}
-                  className={`px-4 py-2 rounded-md text-sm text-white ${
-                    modalAction === "approve"
-                      ? "bg-positive hover:bg-opacity-90"
-                      : "bg-negative hover:bg-opacity-90"
-                  }`}
-                  disabled={modalAction === "reject" && !rejectionReason.trim()}
-                >
-                  {isLoading ? (
-                    <Spinner />
-                  ) : (
-                    <>
-                      {modalAction === "approve"
-                        ? "Approve Product"
-                        : "Reject Product"}
-                    </>
-                  )}
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
+        <ProductModerationModal
+          selectedProduct={selectedProduct}
+          modalAction={modalAction as "view" | "approve" | "reject"}
+          rejectionReason={rejectionReason}
+          onRejectionReasonChange={setRejectionReason}
+          selectedTags={selectedTags}
+          onToggleTag={toggleTag}
+          onUpdateTags={handleUpdateTags}
+          isUpdatingTags={isUpdatingTags}
+          onClose={() => setShowModal(false)}
+          onPrimaryAction={handleModalAction}
+          isPrimaryLoading={isLoading}
+        />
       )}
     </div>
   );
-};
+}
 
 export default ProductModeration;

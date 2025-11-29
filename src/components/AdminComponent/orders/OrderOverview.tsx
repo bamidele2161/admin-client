@@ -190,7 +190,8 @@ const OrderOverview = () => {
       const response = await updateOrderStatus({
         id: selectedOrder.id,
         body: { status: statusOrderStatus },
-      });
+      }).unwrap();
+
       toast.success(response?.data?.message);
       refetch();
       setUpdateModal(false);
