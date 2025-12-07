@@ -107,7 +107,7 @@ const TopVendors: React.FC = () => {
   };
 
   return (
-    <div className="p-6 border shadow-default rounded-lg h-[70vh]">
+    <div className="p-6 border shadow-default rounded-lg h-[67vh]">
       <div className="mb-6">
         <div className="flex items-center gap-2 mb-2">
           <TrendingUp className="h-5 w-5 text-green-600" />
