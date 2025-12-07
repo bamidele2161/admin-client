@@ -26,7 +26,15 @@ interface VendorsData {
 
 const VendorsTable: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: vendorsData, isLoading, error } = useGetVendorsReportQuery();
+  const {
+    data: vendorsData,
+    isLoading,
+    error,
+  } = useGetVendorsReportQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
 
   const data: VendorsData = vendorsData?.data || {
     vendors: [],

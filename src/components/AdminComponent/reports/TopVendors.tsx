@@ -24,7 +24,15 @@ interface VendorsData {
 }
 
 const TopVendors: React.FC = () => {
-  const { data: vendorsData, isLoading, error } = useGetVendorsReportQuery();
+  const {
+    data: vendorsData,
+    isLoading,
+    error,
+  } = useGetVendorsReportQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
 
   if (isLoading) {
     return (

@@ -18,7 +18,11 @@ interface FinancialData {
 }
 
 const FinancialSummary: React.FC = () => {
-  const { data, isLoading, error } = useGetFinancialSummaryQuery();
+  const { data, isLoading, error } = useGetFinancialSummaryQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
 
   if (isLoading) {
     return <div className="text-center py-8">Loading financial summary...</div>;

@@ -53,7 +53,15 @@ interface LegendProps {
 }
 
 const LedgerChart: React.FC = () => {
-  const { data: ledgerData, isLoading, error } = useGetLedgerReportQuery();
+  const {
+    data: ledgerData,
+    isLoading,
+    error,
+  } = useGetLedgerReportQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
 
   if (isLoading) {
     return (

@@ -32,7 +32,11 @@ const ActivityLogsTable: React.FC = () => {
     data: activityLogsData,
     isLoading,
     error,
-  } = useGetActivityLogsQuery();
+  } = useGetActivityLogsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    refetchOnFocus: true,
+    refetchOnReconnect: true,
+  });
 
   const data: ActivityLogsData = activityLogsData || {
     data: [],
