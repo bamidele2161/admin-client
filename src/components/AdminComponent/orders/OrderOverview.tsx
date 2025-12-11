@@ -334,7 +334,7 @@ const OrderOverview = () => {
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div>
                 <p className="text-sm text-lightGreyColor">Order ID</p>
-                <p className="font-semibold">{selectedOrder.id}</p>
+                <p className="font-semibold">ORD-{selectedOrder.id}</p>
               </div>
               <div>
                 <p className="text-sm text-lightGreyColor">Date</p>
@@ -371,28 +371,36 @@ const OrderOverview = () => {
             </div>
 
             <div className="flex justify-between items-center bg-secColor-Light rounded-lg p-2">
-              <div className="mb-6">
-                <h4 className="text-md font-semibold mb-2">Customer</h4>
+              <div className="mb-6 text-sm">
+                <h4 className="text-sm font-semibold mb-2">Customer</h4>
                 <p>
                   <span className="text-lightGreyColor">Name:</span>{" "}
                   {selectedOrder.userFullName}
+                </p>{" "}
+                <p>
+                  <span className="text-lightGreyColor">Phone:</span>{" "}
+                  {selectedOrder?.User?.phoneNumber}
                 </p>
-                {/* <p>
-                  <span className="text-lightGreyColor">ID:</span>{" "}
-                  {selectedOrder.userId}
-                </p> */}
+                <p>
+                  <span className="text-lightGreyColor">Address:</span>{" "}
+                  {selectedOrder?.User?.address}
+                </p>
               </div>
 
-              <div className="mb-6">
-                <h4 className="text-md font-semibold mb-2">Vendor</h4>
+              <div className="mb-6 text-sm">
+                <h4 className="text-sm font-semibold mb-2">Vendor</h4>
                 <p>
                   <span className="text-lightGreyColor">Name:</span>{" "}
                   {selectedOrder.vendorBusinessName}
                 </p>
-                {/* <p>
-                  <span className="text-lightGreyColor">ID:</span>{" "}
-                  {selectedOrder.vendorId}
-                </p> */}
+                <p>
+                  <span className="text-lightGreyColor">Phone:</span>{" "}
+                  {selectedOrder?.vendor?.User?.phoneNumber}
+                </p>
+                <p>
+                  <span className="text-lightGreyColor">Address:</span>{" "}
+                  {selectedOrder.vendor?.User?.address}
+                </p>
               </div>
             </div>
 
@@ -407,7 +415,7 @@ const OrderOverview = () => {
                 >
                   <div className="flex flex-col items-start justify-start">
                     <p className="text-sm text-greyColr font-workSans font-medium">
-                      Product ID: {item.productId}
+                      Product: {item?.product?.name}
                     </p>
                     <p className="text-sm text-lightGreyColor font-workSans">
                       Quantity: {item.quantity}
@@ -415,15 +423,12 @@ const OrderOverview = () => {
                   </div>
                   <div className="flex flex-col items-end justify-end">
                     <p className="text-sm text-greyColr font-workSans font-medium">
-                      Size:{item.size}
+                      Size: {item.size}
                     </p>
                     <p className="text-sm text-greyColr font-workSans font-medium">
-                      Color:{item.color}
+                      Color: {item.color}
                     </p>
                   </div>
-                  <p className="text-sm text-greyColr font-workSans font-medium">
-                    Product Name:{item?.product?.name}
-                  </p>
                 </div>
               ))}
             </div>
@@ -443,15 +448,6 @@ const OrderOverview = () => {
                 className="px-4 py-2 border border-gray-300 rounded-md text-lightGreyColor hover:bg-gray-100"
               >
                 Close
-              </button>
-              <button
-                onClick={() => {
-                  console.log("Print order", selectedOrder);
-                  alert(`Printing order ${selectedOrder.id}`);
-                }}
-                className="px-4 py-2 bg-pryColor text-white rounded-md hover:bg-opacity-90"
-              >
-                Print Order
               </button>
             </div>
           </div>
