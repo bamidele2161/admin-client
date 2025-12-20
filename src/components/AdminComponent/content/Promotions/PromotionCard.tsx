@@ -104,7 +104,8 @@ const PromotionCard: React.FC<PromotionCardProps> = ({
               <p className="text-sm text-lightGreyColor mt-1">
                 Active:{" "}
                 <span className="text-greyColr">
-                  {promotion.startDate} to {promotion.endDate}
+                  {promotion.startDate?.slice(0, 10)} to{" "}
+                  {promotion.endDate?.slice(0, 10)}
                 </span>
               </p>
             </div>
