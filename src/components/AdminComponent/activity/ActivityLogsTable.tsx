@@ -117,7 +117,7 @@ const ActivityLogsTable: React.FC = () => {
         </div>
       ),
       sortable: true,
-      width: "200px",
+      width: "250px",
     },
     {
       name: "Action",
@@ -137,30 +137,29 @@ const ActivityLogsTable: React.FC = () => {
       sortable: true,
       width: "190px",
     },
-    {
-      name: "Entity",
-      selector: (row: ActivityLog) => row.entity,
-      cell: (row: ActivityLog) => (
-        <div className="text-sm">
-          <div className="font-medium text-gray-900">{row.entity}</div>
-          <div className="text-xs text-gray-500">ID: {row.entityId}</div>
-        </div>
-      ),
-      sortable: true,
-      width: "120px",
-    },
+    // {
+    //   name: "Entity",
+    //   selector: (row: ActivityLog) => row.entity,
+    //   cell: (row: ActivityLog) => (
+    //     <div className="text-sm">
+    //       <div className="font-medium text-gray-900">{row.entity}</div>
+    //       <div className="text-xs text-gray-500">ID: {row.entityId}</div>
+    //     </div>
+    //   ),
+    //   sortable: true,
+    //   width: "120px",
+    // },
     {
       name: "Details",
       selector: (row: ActivityLog) => row.details,
       cell: (row: ActivityLog) => (
-        <div className="text-sm text-gray-700 max-w-xs">
+        <div className="text-sm text-gray-700 max-w-sm">
           <div className="truncate" title={row.details}>
             {row.details}
           </div>
         </div>
       ),
       sortable: false,
-      width: "340px",
     },
 
     {
