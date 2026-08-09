@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { HiOutlineBars3, HiOutlineXMark } from "react-icons/hi2";
 import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
@@ -10,7 +11,17 @@ const Navbar: React.FC<NavbarProps> = ({ title, subtitle }) => {
   const { userInfo } = useAppSelector(selectAuth);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [menuOpen]);
+
   return (
+    <>
     <header className="admin-navbar relative flex items-center justify-between gap-4 px-5 py-6 sm:px-8 lg:px-10 lg:py-8">
       <div className="flex min-w-0 items-center gap-3">
         <button aria-label="Open navigation" onClick={() => setMenuOpen(true)} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white lg:hidden"><HiOutlineBars3 size={20} /></button>
@@ -31,13 +42,17 @@ const Navbar: React.FC<NavbarProps> = ({ title, subtitle }) => {
         </div>
       </div>
 
-      {menuOpen && <div className="fixed inset-0 z-[100] bg-pryColor/40 backdrop-blur-sm lg:hidden" onClick={() => setMenuOpen(false)}>
-        <nav className="h-full w-[min(86vw,330px)] bg-pryColor p-5 text-white shadow-2xl" onClick={(event) => event.stopPropagation()}>
-          <div className="mb-8 flex items-center justify-between"><div><p className="font-spaceGrotesk text-xl font-semibold">ashobox</p><p className="text-[9px] font-bold uppercase tracking-[.22em] text-white/45">Admin studio</p></div><button aria-label="Close navigation" onClick={() => setMenuOpen(false)} className="rounded-full border border-white/15 p-2"><HiOutlineXMark size={20} /></button></div>
-          <ul className="space-y-1">{adminSidebarData.map((item) => <li key={item.id}><NavLink to={item.url} onClick={() => setMenuOpen(false)} className={({isActive}) => `flex items-center gap-3 rounded-full px-4 py-3 text-sm ${isActive ? "bg-white font-semibold text-pryColor" : "text-white/75 hover:bg-white/10 hover:text-white"}`}><item.icon size={17} />{item.title}</NavLink></li>)}</ul>
-        </nav>
-      </div>}
     </header>
+    {menuOpen && createPortal(
+      <div className="fixed inset-0 z-[200] bg-pryColor/45 backdrop-blur-sm lg:hidden" onClick={() => setMenuOpen(false)}>
+        <nav aria-label="Admin navigation" className="h-dvh w-[min(86vw,330px)] overflow-y-auto bg-pryColor p-5 text-white shadow-2xl" onClick={(event) => event.stopPropagation()}>
+          <div className="sticky top-0 z-10 mb-7 flex items-center justify-between bg-pryColor pb-3"><div><p className="font-spaceGrotesk text-xl font-semibold">ashobox</p><p className="text-[9px] font-bold uppercase tracking-[.22em] text-white/45">Admin studio</p></div><button aria-label="Close navigation" onClick={() => setMenuOpen(false)} className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15"><HiOutlineXMark size={22} /></button></div>
+          <ul className="space-y-1.5">{adminSidebarData.map((item) => <li key={item.id}><NavLink to={item.url} onClick={() => setMenuOpen(false)} className={({isActive}) => `flex items-center gap-3 rounded-full px-4 py-3 text-sm ${isActive ? "bg-white font-semibold text-pryColor" : "text-white/75"}`}><item.icon size={18} />{item.title}</NavLink></li>)}</ul>
+        </nav>
+      </div>,
+      document.body
+    )}
+    </>
   );
 };
 
