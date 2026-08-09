@@ -1,74 +1,43 @@
-// import { NotificationIcon } from "../../assets/svg/CustomSVGs";
+import { useState } from "react";
+import { HiOutlineBars3, HiOutlineXMark } from "react-icons/hi2";
+import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../hooks";
 import { type NavbarProps } from "../../interfaces/Global";
 import { selectAuth } from "../../store/slice/authSlice";
+import { adminSidebarData } from "../Sidebar/SidebarData";
 
 const Navbar: React.FC<NavbarProps> = ({ title, subtitle }) => {
   const { userInfo } = useAppSelector(selectAuth);
-  console.log(userInfo);
-  return (
-    <div className="flex justify-between items-center px-10 py-5 bg-white shadow-default">
-      <div className="flex flex-col gap-4">
-        <h3 className="text-pryColor font-semibold text-[32px] font-bricolage leading-6">
-          {title}
-        </h3>
-        <p className="text-lightGreyColor font-inter leading-4 font-normal text-sm">
-          {subtitle}
-        </p>
-      </div>
-      <div className="flex items-center gap-4">
-        {userInfo?.role === "VENDOR" && (
-          <span
-            className={`
-         px-3 py-1 rounded-full text-xs font-semibold
-         ${
-           userInfo?.Vendor?.status === "PENDING"
-             ? "bg-yellow-50 text-yellow-700"
-             : userInfo?.Vendor?.status === "APPROVED"
-             ? "bg-green-50 text-green-700"
-             : userInfo?.Vendor?.status === "REJECTED"
-             ? "bg-orange-50 text-orange-700"
-             : userInfo?.Vendor?.status === "INACTIVE"
-             ? "bg-red-50 text-red-700"
-             : "bg-gray-50 text-gray-700"
-         }
-       `}
-          >
-            {userInfo?.Vendor?.status || "Unknown"}
-          </span>
-        )}
+  const [menuOpen, setMenuOpen] = useState(false);
 
-        <div className="flex gap-4 items-center">
-          <div className="image">
-            {userInfo?.Vendor?.businessLogo ? (
-              <img
-                src={""}
-                alt="Uploaded Preview"
-                className="w-12 h-12 rounded-full mr-4"
-              />
-            ) : (
-              <div className="flex items-center justify-center w-[48px] h-[48px] bg-[#f1f2f3] p-4 rounded-full">
-                <h3 className="text-pryColor font-semibold text-xl font-bricolage leading-6">
-                  {userInfo?.Vendor?.businessName?.charAt(0) ||
-                    userInfo?.businessName?.charAt(0) ||
-                    userInfo?.fullName?.charAt(0)}
-                </h3>
-              </div>
-            )}
-          </div>
-          <div className="flex flex-col">
-            <p className=" font-semibold text-sm font-inter text-greyColr">
-              {userInfo?.fullName}
-            </p>
-            <div className="flex gap-1 items-center">
-              <p className="text-lightGreyColor font-medium font-inter text-xs">
-                {userInfo?.Vendor?.businessName || userInfo?.businessName}
-              </p>
-            </div>
-          </div>
+  return (
+    <header className="admin-navbar relative flex items-center justify-between gap-4 px-5 py-6 sm:px-8 lg:px-10 lg:py-8">
+      <div className="flex min-w-0 items-center gap-3">
+        <button aria-label="Open navigation" onClick={() => setMenuOpen(true)} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-black/10 bg-white lg:hidden"><HiOutlineBars3 size={20} /></button>
+        <div className="min-w-0">
+          <p className="text-[10px] font-bold uppercase tracking-[.2em] text-lightGreyColor">Ashobox operations</p>
+          <h1 className="truncate font-spaceGrotesk text-2xl font-semibold leading-none tracking-[-.035em] text-pryColor sm:text-4xl">{title}</h1>
+          <p className="mt-2 hidden text-sm font-normal leading-5 text-lightGreyColor sm:block">{subtitle}</p>
         </div>
       </div>
-    </div>
+
+      <div className="flex items-center gap-3 rounded-full border border-black/10 bg-white/65 p-1.5 sm:pr-4">
+        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pryColor sm:h-12 sm:w-12">
+          <span className="font-spaceGrotesk text-lg font-semibold text-white">{userInfo?.fullName?.charAt(0) || "A"}</span>
+        </div>
+        <div className="hidden flex-col sm:flex">
+          <p className="text-sm font-semibold text-greyColr">{userInfo?.fullName || "Administrator"}</p>
+          <p className="text-xs font-medium text-lightGreyColor">Ashobox admin</p>
+        </div>
+      </div>
+
+      {menuOpen && <div className="fixed inset-0 z-[100] bg-pryColor/40 backdrop-blur-sm lg:hidden" onClick={() => setMenuOpen(false)}>
+        <nav className="h-full w-[min(86vw,330px)] bg-pryColor p-5 text-white shadow-2xl" onClick={(event) => event.stopPropagation()}>
+          <div className="mb-8 flex items-center justify-between"><div><p className="font-spaceGrotesk text-xl font-semibold">ashobox</p><p className="text-[9px] font-bold uppercase tracking-[.22em] text-white/45">Admin studio</p></div><button aria-label="Close navigation" onClick={() => setMenuOpen(false)} className="rounded-full border border-white/15 p-2"><HiOutlineXMark size={20} /></button></div>
+          <ul className="space-y-1">{adminSidebarData.map((item) => <li key={item.id}><NavLink to={item.url} onClick={() => setMenuOpen(false)} className={({isActive}) => `flex items-center gap-3 rounded-full px-4 py-3 text-sm ${isActive ? "bg-white font-semibold text-pryColor" : "text-white/75 hover:bg-white/10 hover:text-white"}`}><item.icon size={17} />{item.title}</NavLink></li>)}</ul>
+        </nav>
+      </div>}
+    </header>
   );
 };
 

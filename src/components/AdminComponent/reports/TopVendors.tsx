@@ -1,7 +1,8 @@
 import React from "react";
 import { Card, CardContent } from "../../Cards/Cards";
 import { useGetVendorsReportQuery } from "../../../service/admin";
-import { TrendingUp, Store, Package } from "lucide-react";
+import { HiOutlineBuildingStorefront } from "react-icons/hi2";
+import { StatusBadge } from "../AdminUI";
 
 interface Vendor {
   id: number;
@@ -84,19 +85,6 @@ const TopVendors: React.FC = () => {
     }).format(amount);
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "APPROVED":
-        return "bg-green-100 text-green-800";
-      case "PENDING":
-        return "bg-yellow-100 text-yellow-800";
-      case "REJECTED":
-        return "bg-red-100 text-red-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
   const getInitials = (name: string) => {
     return name
       .split(" ")
@@ -107,34 +95,22 @@ const TopVendors: React.FC = () => {
   };
 
   return (
-    <div className="p-6 border shadow-default rounded-lg h-[67vh]">
+    <div className="admin-panel h-full">
       <div className="mb-6">
-        <div className="flex items-center gap-2 mb-2">
-          <TrendingUp className="h-5 w-5 text-green-600" />
-          <h3 className="text-lg font-semibold text-gray-900">
-            Top Performing Vendors
-          </h3>
-        </div>
-        <p className="text-sm text-gray-500">
-          Vendors ranked by total earnings
-        </p>
+        <p className="text-[10px] font-bold uppercase tracking-[.18em] text-secColor">Performance ranking</p><h3 className="mt-1 font-spaceGrotesk text-2xl font-semibold tracking-tight">Top vendors</h3><p className="mt-1 text-sm text-lightGreyColor">Ranked by total earnings.</p>
       </div>
 
       {topVendors.length > 0 ? (
         <CardContent>
           <div className="space-y-4">
-            {topVendors?.slice(0, 3).map((vendor) => (
+            {topVendors?.slice(0, 5).map((vendor, index) => (
               <div
                 key={vendor.id}
-                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                className="grid grid-cols-[auto_1fr_auto] items-center gap-3 rounded-2xl border border-black/[.07] bg-[#F8F7F3] p-4 transition hover:bg-white"
               >
-                <div className="flex items-center space-x-4">
+                <div className="flex items-center space-x-3">
                   <div className="relative">
-                    <div className="flex items-center justify-center w-12 h-12 bg-blue-100 rounded-full">
-                      <span className="text-pryColor font-semibold text-sm">
-                        {getInitials(vendor.businessName)}
-                      </span>
-                    </div>
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-pryColor font-spaceGrotesk text-sm font-semibold text-white">{String(index + 1).padStart(2,"0")}</div>
                     {/* <div className="absolute -top-1 -right-1 bg-yellow-400 text-yellow-900 text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
                       {index + 1}
                     </div> */}
@@ -145,26 +121,17 @@ const TopVendors: React.FC = () => {
                       <h4 className="font-medium text-gray-900">
                         {vendor.businessName}
                       </h4>
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
-                          vendor.status
-                        )}`}
-                      >
-                        {vendor.status}
-                      </span>
+                      <StatusBadge value={vendor.status} />
                     </div>
 
                     <div className="flex items-center gap-4 text-sm text-gray-600">
-                      <div className="flex items-center gap-1">
-                        <Package className="h-4 w-4" />
-                        <span>{vendor.totalOrders} orders</span>
-                      </div>
+                      <span>{vendor.totalOrders} orders · {getInitials(vendor.businessName)}</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="text-right">
-                  <div className="flex items-center gap-1 text-green-600 font-semibold">
+                  <div className="font-semibold text-pryColor">
                     <span>{formatCurrency(vendor.totalEarnings)}</span>
                   </div>
                   <p className="text-xs text-gray-500 mt-1">
@@ -214,7 +181,7 @@ const TopVendors: React.FC = () => {
         </CardContent>
       ) : (
         <div className="text-center py-8">
-          <Store className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+          <HiOutlineBuildingStorefront className="mx-auto mb-4 text-gray-400" size={36} />
           <p className="text-gray-500">No vendor data available</p>
         </div>
       )}

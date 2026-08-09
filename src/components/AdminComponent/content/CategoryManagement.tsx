@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Plus, Edit, Trash2, ChevronDown, ChevronRight } from "lucide-react";
+import { HiOutlinePlus as Plus, HiOutlinePencilSquare as Edit, HiOutlineTrash as Trash2, HiOutlineChevronDown as ChevronDown, HiOutlineChevronRight as ChevronRight } from "react-icons/hi2";
 import {
   useAddCategoryMutation,
   useAddSubCategoryMutation,

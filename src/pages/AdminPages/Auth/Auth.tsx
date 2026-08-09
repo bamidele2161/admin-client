@@ -6,7 +6,8 @@ import { toast } from "react-toastify";
 import Spinner from "../../../components/Spinner/Spinner";
 import { useAppDispatch } from "../../../hooks";
 import { saveUserInfo } from "../../../store/slice/authSlice";
-import { BrandIcon, BrandMobileIcon } from "../../../assets/svg/Product";
+import { BrandIcon } from "../../../assets/svg/Product";
+import { HiOutlineArrowRight, HiOutlineLockClosed, HiOutlineShieldCheck } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "../../../hooks/cookiesHook";
 const AdminAuth = () => {
@@ -65,34 +66,34 @@ const AdminAuth = () => {
   // Exchange the code for user info
 
   return (
-    <div className="bg-gradient-to-br from-secColor-Light via-[#f0f4fb] to-[#FFFFFF] py-20 h-screen flex flex-col gap-24">
-      <div className="flex items-center gap-3 justify-center">
-        <BrandIcon className="lg:h-10 md:h-8 w-auto hidden md:block" />
+    <main className="min-h-screen bg-[#ECE9E1] p-3 sm:p-5 lg:p-7">
+      <section className="mx-auto grid min-h-[calc(100vh-1.5rem)] max-w-[1500px] overflow-hidden rounded-[2rem] bg-white shadow-[0_30px_90px_rgba(21,26,34,.10)] sm:min-h-[calc(100vh-2.5rem)] lg:grid-cols-[1.08fr_.92fr]">
+        <div className="relative hidden overflow-hidden bg-pryColor p-12 text-white lg:flex lg:flex-col lg:justify-between">
+          <div className="absolute -right-40 -top-40 h-[34rem] w-[34rem] rounded-full border border-white/10" />
+          <div className="absolute -bottom-32 left-20 h-80 w-80 rounded-full bg-[#6F8294]/30 blur-3xl" />
+          <div className="relative flex items-center gap-3"><BrandIcon className="h-9 w-auto brightness-0 invert" /><div><p className="font-spaceGrotesk text-xl font-semibold">ashobox</p><p className="text-[9px] font-bold uppercase tracking-[.24em] text-white/45">Admin studio</p></div></div>
+          <div className="relative max-w-xl">
+            <p className="mb-5 text-[11px] font-bold uppercase tracking-[.22em] text-white/50">Marketplace control centre</p>
+            <h1 className="font-spaceGrotesk text-6xl font-semibold leading-[.98] tracking-[-.05em]">Fashion commerce,<br/>beautifully managed.</h1>
+            <p className="mt-7 max-w-md text-base leading-7 text-white/60">One calm workspace for products, orders, vendors, customers, payouts, and the decisions that move Ashobox forward.</p>
+          </div>
+          <div className="relative flex gap-6 text-xs font-medium text-white/55"><span className="flex items-center gap-2"><HiOutlineShieldCheck size={16}/> Secure access</span><span className="flex items-center gap-2"><HiOutlineLockClosed size={16}/> Admin only</span></div>
+        </div>
 
-        <BrandMobileIcon className="h-8 w-auto md:hidden" />
-        <h1 className="font-bold text-xl text-pryColor hidden md:block">
-          ashoBox
-        </h1>
-      </div>
-
-      <section className="justify-center flex items-center md:px-0 px-12 border-3">
-        <div className="flex flex-col gap-6 bg-white md:p-12 p-8 rounded-lg shadow-sm justify-center items-center border">
-          <div className="flex flex-col gap-4">
-            <div className="flex justify-between items-center pb-4 w-full">
-              <h1 className="text-2xl md:text-3xl font-semibold">Login</h1>
-            </div>
-
-            <p className="mb-6 md:text-base text-sm md:w-[400px] w-[300px]">
-              Welcome back Admin!
-              <br /> Log in to access your account.
-            </p>
+        <div className="flex items-center justify-center bg-[#F8F7F3] px-6 py-12 sm:px-12 lg:px-20">
+          <div className="w-full max-w-md">
+            <div className="mb-14 flex items-center gap-3 lg:hidden"><BrandIcon className="h-8 w-auto" /><div><p className="font-spaceGrotesk text-xl font-semibold">ashobox</p><p className="text-[9px] font-bold uppercase tracking-[.22em] text-lightGreyColor">Admin studio</p></div></div>
+            <p className="text-[10px] font-bold uppercase tracking-[.2em] text-lightGreyColor">Welcome back</p>
+            <h2 className="mt-3 font-spaceGrotesk text-4xl font-semibold tracking-[-.04em] text-pryColor sm:text-5xl">Sign in to<br/>your workspace.</h2>
+            <p className="mb-9 mt-4 text-sm leading-6 text-lightGreyColor">Use your administrator credentials to continue.</p>
 
             <form
-              className="flex flex-col gap-4 w-full"
+              className="flex w-full flex-col gap-5"
               onSubmit={handleSubmit}
             >
+              <label className="text-xs font-semibold text-pryColor">Email or phone number</label>
               <FormInput
-                placeholder="Email or phone number"
+                placeholder="admin@ashobox.com"
                 type="text"
                 id={"emailOrPhoneNumber"}
                 name="emailOrPhoneNumber"
@@ -105,8 +106,9 @@ const AdminAuth = () => {
                 onChange={handleChange}
                 defaultValue={values?.emailOrPhoneNumber}
               />
+              <label className="mt-1 text-xs font-semibold text-pryColor">Password</label>
               <FormInput
-                placeholder="password"
+                placeholder="Enter your password"
                 type="password"
                 id={"password"}
                 name="password"
@@ -116,16 +118,17 @@ const AdminAuth = () => {
                 defaultValue={values?.password}
               />
               <button
-                className="w-full bg-pryColor text-white py-3 mt-4 rounded-lg hover:bg-pryColor"
+                className="mt-3 flex min-h-14 w-full items-center justify-center gap-2 rounded-full bg-pryColor px-6 py-3 font-semibold text-white transition hover:bg-[#242B35]"
                 type="submit"
               >
-                {isLoading ? <Spinner /> : "Sign In"}
+                {isLoading ? <Spinner /> : <>Sign in securely <HiOutlineArrowRight size={18}/></>}
               </button>
             </form>
+            <p className="mt-8 text-center text-xs leading-5 text-lightGreyColor">Access is monitored and limited to authorised Ashobox team members.</p>
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 };
 

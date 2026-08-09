@@ -1,4 +1,4 @@
-import { AlertTriangle } from "lucide-react";
+import { HiOutlineExclamationTriangle as AlertTriangle } from "react-icons/hi2";
 
 const lowStockItems = [
   { name: "Leather Boots", stock: 2 },

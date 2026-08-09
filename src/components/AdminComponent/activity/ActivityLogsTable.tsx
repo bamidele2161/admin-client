@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
 import { Card } from "../../Cards/Cards";
 import { useGetActivityLogsQuery } from "../../../service/admin";
-import { Search, Activity, ChevronDown, User } from "lucide-react";
+import { HiOutlineMagnifyingGlass as Search, HiOutlineQueueList as Activity, HiOutlineChevronDown as ChevronDown, HiOutlineUser as User } from "react-icons/hi2";
 
 interface ActivityLog {
   id: number;
@@ -227,14 +227,14 @@ const ActivityLogsTable: React.FC = () => {
   }
 
   return (
-    <div className="p-6 shadow-default rounded-lg bg-white">
+    <div className="admin-panel">
       <div className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">
+            <h3 className="admin-panel-title">
               System Activity Logs
             </h3>
-            <p className="text-sm text-gray-500">
+            <p className="admin-panel-copy">
               Complete system activity and audit trail
             </p>
           </div>

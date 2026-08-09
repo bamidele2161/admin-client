@@ -1,5 +1,5 @@
 import React from "react";
-import { Edit2, Trash2 } from "lucide-react";
+import { HiOutlinePencilSquare as Edit2, HiOutlineTrash as Trash2 } from "react-icons/hi2";
 import DataTable from "react-data-table-component";
 
 interface Coupon {

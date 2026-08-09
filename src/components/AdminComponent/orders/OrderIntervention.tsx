@@ -1,6 +1,7 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
-import { Edit, Truck, XCircle, ChevronDown } from "lucide-react";
+import { HiOutlineTruck as Truck, HiOutlineChevronDown as ChevronDown } from "react-icons/hi2";
+import { ActionButton } from "../AdminUI";
 
 const orders = [
   {
@@ -219,23 +220,8 @@ const OrderIntervention = () => {
     {
       name: "Actions",
       cell: (row: any) => (
-        <div className="flex space-x-2">
-          <button
-            onClick={() => handleAction(row, "changeStatus")}
-            className="p-1 rounded text-pryColor hover:bg-pryColor-Light"
-            title="Change Status"
-          >
-            <Edit size={16} />
-          </button>
-          {row.status !== "Canceled" && row.status !== "Delivered" && (
-            <button
-              onClick={() => handleAction(row, "cancel")}
-              className="p-1 rounded text-negative hover:bg-negative-Light"
-              title="Cancel Order"
-            >
-              <XCircle size={16} />
-            </button>
-          )}
+        <div>
+          <ActionButton onClick={() => handleAction(row, "changeStatus")} label={`Open actions for ${row.id}`} />
           {/* {(row.status === "Paid" ||
             row.status === "Shipped" ||
             row.status === "Delivered") && (

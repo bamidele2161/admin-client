@@ -1,10 +1,11 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
-import { Eye, FileDown, ChevronDown, TrendingUp, Edit } from "lucide-react";
+import { HiOutlineArrowDownTray as FileDown, HiOutlineChevronDown as ChevronDown, HiOutlineChartBarSquare as TrendingUp } from "react-icons/hi2";
 import { useGetAllOrdersQuery } from "../../../service/product";
 import { toast } from "react-toastify";
 import { useUpdateOrderStatusMutation } from "../../../service/admin";
 import Spinner from "../../Spinner/Spinner";
+import { ActionButton, StatusBadge } from "../AdminUI";
 
 const OrderOverview = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -120,44 +121,13 @@ const OrderOverview = () => {
     {
       name: "Status",
       selector: (row: any) => row.status,
-      cell: (row: any) => (
-        <span
-          className={`px-2 py-1 rounded-full text-xs ${
-            row.status === "Pending"
-              ? "bg-processing text-white"
-              : row.status === "Paid"
-              ? "bg-pryColor text-white"
-              : row.status === "Shipped"
-              ? "bg-secColor text-white"
-              : row.status === "Delivered"
-              ? "bg-positive text-white"
-              : "bg-negative text-white"
-          }`}
-        >
-          {row.status}
-        </span>
-      ),
+      cell: (row: any) => <StatusBadge value={row.status} />,
       sortable: true,
     },
     {
       name: "Actions",
       cell: (row: any) => (
-        <div className="flex gap-2">
-          <button
-            onClick={() => handleViewOrder(row)}
-            className="px-3 py-1 bg-pryColor-Light text-pryColor rounded-md flex items-center hover:bg-pryColor hover:text-white"
-          >
-            <Eye size={16} className="mr-1" />
-            {/* <span>View</span> */}
-          </button>
-          <button
-            onClick={() => handleUpdateOrder(row)}
-            className="px-3 py-1 bg-pryColor-Light text-pryColor rounded-md flex items-center hover:bg-pryColor hover:text-white"
-          >
-            <Edit size={16} />
-            {/* <span>Update</span> */}
-          </button>
-        </div>
+        <ActionButton onClick={() => handleViewOrder(row)} label={`Open actions for order ${row.id}`} />
       ),
     },
   ];
@@ -202,7 +172,7 @@ const OrderOverview = () => {
   };
   console.log(data);
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="admin-panel">
       <div className="flex flex-col md:flex-row justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-greyColr mb-4 md:mb-0">
           Order Overview
@@ -228,16 +198,16 @@ const OrderOverview = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div className="bg-pryColor-Light p-4 rounded-lg">
-          <h3 className="text-sm font-medium text-greyColr">Total Orders</h3>
-          <div className="text-2xl font-bold text-pryColor mt-2">
+        <div className="admin-stat">
+          <h3 className="admin-stat-label">Total Orders</h3>
+          <div className="admin-stat-value">
             {totalOrders}
           </div>
         </div>
 
-        <div className="bg-secColor-Light p-4 rounded-lg">
-          <h3 className="text-sm font-medium text-greyColr">Total Revenue</h3>
-          <div className="text-2xl font-bold text-secColor mt-2">
+        <div className="admin-stat">
+          <h3 className="admin-stat-label">Total Revenue</h3>
+          <div className="admin-stat-value">
             {new Intl.NumberFormat("en-NG", {
               style: "currency",
               currency: "NGN",
@@ -247,18 +217,18 @@ const OrderOverview = () => {
           </div>
         </div>
 
-        <div className="bg-positive-Light p-4 rounded-lg">
-          <h3 className="text-sm font-medium text-greyColr">
+        <div className="admin-stat">
+          <h3 className="admin-stat-label">
             Delivered Orders
           </h3>
-          <div className="text-2xl font-bold text-positive mt-2">
+          <div className="admin-stat-value">
             {deliveredOrders}
           </div>
         </div>
 
-        <div className="bg-negative-Light p-4 rounded-lg">
-          <h3 className="text-sm font-medium text-greyColr">Canceled Orders</h3>
-          <div className="text-2xl font-bold text-negative mt-2">
+        <div className="admin-stat">
+          <h3 className="admin-stat-label">Canceled Orders</h3>
+          <div className="admin-stat-value">
             {canceledOrders}
           </div>
         </div>
@@ -443,6 +413,12 @@ const OrderOverview = () => {
             </div>
 
             <div className="mt-6 flex justify-end space-x-3">
+              <button
+                onClick={() => { setShowModal(false); handleUpdateOrder(selectedOrder); }}
+                className="rounded-full bg-pryColor px-5 py-2.5 text-sm font-semibold text-white"
+              >
+                Update status
+              </button>
               <button
                 onClick={() => setShowModal(false)}
                 className="px-4 py-2 border border-gray-300 rounded-md text-lightGreyColor hover:bg-gray-100"

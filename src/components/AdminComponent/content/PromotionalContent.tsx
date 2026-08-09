@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Plus } from "lucide-react";
+import { HiOutlinePlus as Plus } from "react-icons/hi2";
 import {
   useGetAllPromotionsQuery,
   useCreatePromotionMutation,

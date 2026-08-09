@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
-import { UserCog, ChevronDown } from "lucide-react";
+import { HiOutlineUserGroup as UserCog, HiOutlineChevronDown as ChevronDown } from "react-icons/hi2";
 
 // Sample data - in a real app, this would come from your Redux/API
 const users = [

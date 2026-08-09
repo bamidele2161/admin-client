@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
-import { Edit, Trash2, Check, X, ChevronDown } from "lucide-react";
+import { HiOutlinePencilSquare as Edit, HiOutlineTrash as Trash2, HiOutlineCheck as Check, HiOutlineXMark as X, HiOutlineChevronDown as ChevronDown } from "react-icons/hi2";
 
 // Sample data - in a real app, this would come from your Redux/API
 const products = [

@@ -1,4 +1,4 @@
-import { X } from "lucide-react";
+import { HiOutlineXMark as X } from "react-icons/hi2";
 import { useGlobalHooks } from "../../../hooks/globalHooks";
 import PopUp from "../../PopUps/PopUp";
 import { formatTimestamp } from "../../../util";

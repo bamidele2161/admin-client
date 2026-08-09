@@ -4,14 +4,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        pryColor: { DEFAULT: "#254A76", Light: "#D1E2C4", Lighter: "#E7E7E6" },
+        pryColor: { DEFAULT: "#151A22", Light: "#DCE4E8", Lighter: "#ECE9E1" },
         secColor: {
-          DEFAULT: "#80BBEB ",
-          Light: "#E6F2FB",
-          Lighter: "#FFEB7F",
+          DEFAULT: "#6F8294",
+          Light: "#EEF1F3",
+          Lighter: "#F8F7F3",
         },
-        greyColr: "#352F36",
-        lightGreyColor: "#777777",
+        greyColr: "#151A22",
+        lightGreyColor: "#566170",
         black: "#000000",
         footer: "#1B2834",
         negative: { DEFAULT: "#EE443F", Light: "#FFF8F8" },
@@ -19,7 +19,7 @@ export default {
         processing: { DEFAULT: "#DBB950", Light: "#FDFCF8" },
       },
       boxShadow: {
-        default: "0px 1px 7px 4px rgba(229, 229, 229, 0.2)",
+        default: "0 18px 50px rgba(21, 26, 34, 0.07)",
       },
       fontFamily: {
         inter: ['"Inter"', "sans-serif"],

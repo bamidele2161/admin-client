@@ -119,7 +119,7 @@ import {
   selectProduct,
 } from "../../store/slice/productSlice";
 import { useNavigate } from "react-router-dom";
-import { Heart, Star } from "lucide-react";
+import { HiOutlineHeart as Heart, HiOutlineStar as Star } from "react-icons/hi2";
 import LazyLoad from "react-lazyload";
 interface ProductCardProps {
   id: number;

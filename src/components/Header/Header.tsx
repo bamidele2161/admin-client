@@ -14,7 +14,7 @@ import Search from "../Search/Search";
 import { HiOutlineMenu, HiOutlineX } from "react-icons/hi";
 import { BrandIcon, BrandMobileIcon } from "../../assets/svg/Product";
 import MegaMenu from "../MegaMenu/MegaMenu";
-import { ChevronDown } from "lucide-react";
+import { HiOutlineChevronDown as ChevronDown } from "react-icons/hi2";
 import UserCard from "./UserCard";
 
 const Header = ({ setQueryData }: { setQueryData: any }) => {

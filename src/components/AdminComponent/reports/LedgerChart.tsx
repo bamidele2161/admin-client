@@ -107,9 +107,9 @@ const LedgerChart: React.FC = () => {
 
   // Colors for different entry types
   const COLORS = {
-    VENDOR: "#80BBEB",
-    LOGISTICS: "#254A76",
-    ASHOBOX: "#3b82f6",
+    VENDOR: "#6F8294",
+    LOGISTICS: "#DCE4E8",
+    ASHOBOX: "#151A22",
   };
 
   const formatCurrency = (amount: number) => {
@@ -155,15 +155,8 @@ const LedgerChart: React.FC = () => {
   };
 
   return (
-    <div className="p-6 border shadow-default rounded-lg">
-      <div className="mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">
-          Ledger Distribution
-        </h3>
-        <p className="text-sm text-gray-500">
-          Breakdown of financial entries by type
-        </p>
-      </div>
+    <div className="admin-panel h-full">
+      <div className="mb-4"><p className="text-[10px] font-bold uppercase tracking-[.18em] text-secColor">Revenue allocation</p><h3 className="mt-1 font-spaceGrotesk text-2xl font-semibold tracking-tight">Ledger distribution</h3><p className="mt-1 text-sm text-lightGreyColor">How financial entries are distributed.</p></div>
 
       {chartData.length > 0 ? (
         <CardContent>
@@ -178,6 +171,7 @@ const LedgerChart: React.FC = () => {
                   `${name} ${(percent * 100).toFixed(0)}%`
                 }
                 outerRadius={80}
+                innerRadius={56}
                 fill="#8884d8"
                 dataKey="value"
               >

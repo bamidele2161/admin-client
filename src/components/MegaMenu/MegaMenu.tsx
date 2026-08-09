@@ -1,4 +1,4 @@
-import { ChevronRight } from "lucide-react";
+import { HiOutlineChevronRight as ChevronRight } from "react-icons/hi2";
 
 interface MegaMenuProps {
   showCategories: boolean;

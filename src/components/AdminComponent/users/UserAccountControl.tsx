@@ -1,10 +1,7 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
-import {
-  Eye,
-  // Edit, Ban, Check, Key
-} from "lucide-react";
 import { useGetAllUsersQuery } from "../../../service/auth";
+import { ActionButton, DetailGrid, StatusBadge } from "../AdminUI";
 
 // Sample data - in a real app, this would come from your Redux/API
 // const users = [
@@ -141,13 +138,8 @@ const UserAccountControl = () => {
     {
       name: "Actions",
       cell: (row: any) => (
-        <div className="flex space-x-2">
-          <button
-            onClick={() => handleAction(row, "view")}
-            className="p-1 rounded text-pryColor hover:bg-pryColor-Light"
-          >
-            <Eye size={16} />
-          </button>
+        <div>
+          <ActionButton onClick={() => handleAction(row, "view")} label={`Open actions for ${row.fullName}`} />
           {/* <button
             onClick={() => handleAction(row, "edit")}
             className="p-1 rounded text-secColor hover:bg-secColor-Light"
@@ -204,11 +196,11 @@ const UserAccountControl = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-semibold text-greyColr">
+    <div className="admin-panel">
+      <div className="admin-toolbar">
+        <div><h2 className="admin-panel-title">
           User Account Control
-        </h2>
+        </h2><p className="admin-panel-copy">Review customer identity and account information.</p></div>
         <div className="w-64">
           <input
             type="text"
@@ -245,24 +237,7 @@ const UserAccountControl = () => {
                 : "Reset Password"}
             </h3>
 
-            <div className="mb-4">
-              <p className="mb-2">
-                <span className="font-semibold">Name:</span>{" "}
-                {selectedUser?.fullName}
-              </p>
-              <p className="mb-2">
-                <span className="font-semibold">Email:</span>{" "}
-                {selectedUser?.email}
-              </p>
-              <p className="mb-2">
-                <span className="font-semibold">Role:</span>{" "}
-                {selectedUser?.role}
-              </p>
-              <p className="mb-2">
-                <span className="font-semibold">Status:</span>{" "}
-                {selectedUser?.status}
-              </p>
-            </div>
+            <DetailGrid items={[{label:"Name",value:selectedUser?.fullName},{label:"Email",value:selectedUser?.email},{label:"Phone",value:selectedUser?.phoneNumber},{label:"Role",value:selectedUser?.role},{label:"Status",value:<StatusBadge value={selectedUser?.status}/>},{label:"Joined",value:selectedUser?.createdAt?.slice?.(0,10)}]} />
 
             {modalAction !== "view" && (
               <p className="mb-6 text-sm text-lightGreyColor">

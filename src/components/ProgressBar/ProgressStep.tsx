@@ -1,5 +1,5 @@
 import React from "react";
-import { Check } from "lucide-react";
+import { HiOutlineCheck as Check } from "react-icons/hi2";
 
 interface ProgressStepProps {
   id: number;

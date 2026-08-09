@@ -1,4 +1,4 @@
-import { TrendingUp } from "lucide-react";
+import { HiOutlineChartBarSquare as TrendingUp } from "react-icons/hi2";
 
 const bestSellers = [
   { name: "Denim Jacket", sales: 230, totalStock: 300 },

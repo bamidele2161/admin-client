@@ -14,7 +14,7 @@ import {
   Pie,
   Cell,
 } from "recharts";
-import { Download, Calendar } from "lucide-react";
+import { HiOutlineArrowDownTray as Download, HiOutlineCalendarDays as Calendar } from "react-icons/hi2";
 
 const monthlySales = [
   { month: "Jan", sales: 4000, orders: 120 },

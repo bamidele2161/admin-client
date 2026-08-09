@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
-import { Ban, CheckCircle, Eye, AlertTriangle } from "lucide-react";
+import { ActionButton } from "../AdminUI";
 
 const vendors = [
   {
@@ -157,35 +157,7 @@ const VendorSuspension = () => {
     {
       name: "Actions",
       cell: (row: any) => (
-        <div className="flex space-x-2">
-          <button
-            onClick={() => console.log("View vendor", row)}
-            className="p-1 rounded text-pryColor hover:bg-pryColor-Light"
-          >
-            <Eye size={16} />
-          </button>
-          {row.status === "ACTIVE" ? (
-            <button
-              onClick={() => handleSuspend(row)}
-              className="p-1 rounded text-negative hover:bg-negative-Light"
-            >
-              <Ban size={16} />
-            </button>
-          ) : (
-            <button
-              onClick={() => handleActivate(row)}
-              className="p-1 rounded text-positive hover:bg-positive-Light"
-            >
-              <CheckCircle size={16} />
-            </button>
-          )}
-          <button
-            onClick={() => console.log("Warning vendor", row)}
-            className="p-1 rounded text-processing hover:bg-processing-Light"
-          >
-            <AlertTriangle size={16} />
-          </button>
-        </div>
+        <ActionButton onClick={() => row.status === "ACTIVE" ? handleSuspend(row) : handleActivate(row)} label={`Open actions for ${row.businessName}`} />
       ),
     },
   ];
@@ -214,7 +186,7 @@ const VendorSuspension = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="admin-panel">
       <div className="flex flex-col md:flex-row justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-greyColr mb-4 md:mb-0">
           Vendor Management

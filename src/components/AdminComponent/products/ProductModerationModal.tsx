@@ -1,4 +1,5 @@
 import Spinner from "../../Spinner/Spinner";
+import { AdminModal, DetailGrid, StatusBadge } from "../AdminUI";
 
 type ModalAction = "view" | "approve" | "reject";
 
@@ -14,6 +15,7 @@ interface ProductModerationModalProps {
   onClose: () => void;
   onPrimaryAction: () => void;
   isPrimaryLoading: boolean;
+  onChooseAction: (action: ModalAction) => void;
 }
 
 const ProductModerationModal = ({
@@ -28,6 +30,7 @@ const ProductModerationModal = ({
   onClose,
   onPrimaryAction,
   isPrimaryLoading,
+  onChooseAction,
 }: ProductModerationModalProps) => {
   const inspirationTagOptions = [
     { id: 1, value: "wizkid", name: "Inspired By Wizkid" },
@@ -38,15 +41,7 @@ const ProductModerationModal = ({
   ];
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white p-6 rounded-lg w-[700px]">
-        <h3 className="text-lg font-semibold mb-4 text-greyColr">
-          {modalAction === "view"
-            ? "Product Details"
-            : modalAction === "approve"
-            ? "Approve Product"
-            : "Reject Product"}
-        </h3>
+    <AdminModal onClose={onClose} title={modalAction === "view" ? "Product review" : modalAction === "approve" ? "Approve product" : "Reject product"}>
 
         <div className="mb-4">
           <div className="flex justify-center items-center w-full mb-4">
@@ -57,79 +52,8 @@ const ProductModerationModal = ({
             />
           </div>
 
-          <div className="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <p className="mb-2 text-sm">
-                <span className="font-semibold">Product:</span>{" "}
-                {selectedProduct?.name}
-              </p>
-            </div>
-            <div>
-              <p className="mb-2 text-sm">
-                <span className="font-semibold">Price:</span>{" "}
-                {selectedProduct?.price}
-              </p>
-            </div>
-            <div>
-              <p className="mb-2 text-sm">
-                <span className="font-semibold">Category:</span>{" "}
-                {selectedProduct?.subCategoryItemName}
-              </p>
-            </div>
-            <div>
-              <p className="mb-2 text-sm">
-                <span className="font-semibold">Stock:</span>{" "}
-                {selectedProduct?.stock}
-              </p>
-            </div>
-
-            <div className="md:col-span-2">
-              <p className="mb-2 text-sm">
-                <span className="font-semibold">Description:</span>{" "}
-                {selectedProduct?.description}
-              </p>
-            </div>
-            <div>
-              <p className="mb-2 text-sm">
-                <span className="font-semibold">Views:</span>{" "}
-                {selectedProduct?.views}
-              </p>
-            </div>
-            <div>
-              <p className="mb-2 flex gap-2 text-sm">
-                <span className="font-semibold">Status:</span>{" "}
-                <p
-                  className={`
-                    px-3 py-1 rounded-full text-xs font-semibold
-                    ${selectedProduct?.status === "Active" ? "w-32" : "w-20"} 
-                    ${
-                      selectedProduct?.status === "Approved"
-                        ? "bg-green-100 text-green-700"
-                        : selectedProduct?.status === "Active"
-                        ? "bg-yellow-100 text-yellow-600"
-                        : "bg-orange-100 text-orange-700"
-                    }
-                  `}
-                >
-                  {selectedProduct?.status === "Active"
-                    ? "Pending Approval"
-                    : selectedProduct?.status}
-                </p>
-              </p>
-            </div>
-            <div>
-              <p className="mb-2 text-sm">
-                <span className="font-semibold">Material:</span>{" "}
-                {selectedProduct?.material}
-              </p>
-            </div>
-            <div>
-              <p className="mb-2 text-sm">
-                <span className="font-semibold">Submitted On:</span>{" "}
-                {selectedProduct?.createdAt?.slice(0, 10)}
-              </p>
-            </div>
-          </div>
+          <DetailGrid items={[{label:"Product",value:selectedProduct?.name},{label:"Price",value:`₦${Number(selectedProduct?.price || 0).toLocaleString()}`},{label:"Category",value:selectedProduct?.subCategoryItemName},{label:"Stock",value:selectedProduct?.stock},{label:"Status",value:<StatusBadge value={selectedProduct?.status === "Active" ? "Pending" : selectedProduct?.status}/>},{label:"Material",value:selectedProduct?.material},{label:"Submitted",value:selectedProduct?.createdAt?.slice(0,10)},{label:"Views",value:selectedProduct?.views}]} />
+          <p className="mt-4 rounded-2xl bg-[#EEF1F3] p-4 text-sm leading-6 text-[#566170]">{selectedProduct?.description || "No description provided."}</p>
 
           {modalAction === "view" && (
             <div className="mb-4">
@@ -154,6 +78,7 @@ const ProductModerationModal = ({
               </div>
             </div>
           )}
+          {modalAction === "view" && <div className="mt-6 flex flex-wrap gap-2 border-t border-black/10 pt-5">{selectedProduct?.status !== "Approved" && <button onClick={() => onChooseAction("approve")} className="rounded-full bg-pryColor px-5 py-2.5 text-sm font-semibold text-white">Approve product</button>}{selectedProduct?.status !== "Rejected" && <button onClick={() => onChooseAction("reject")} className="rounded-full border border-red-200 bg-red-50 px-5 py-2.5 text-sm font-semibold text-red-700">Reject product</button>}</div>}
         </div>
 
         {modalAction === "reject" && (
@@ -216,8 +141,7 @@ const ProductModerationModal = ({
             </button>
           )}
         </div>
-      </div>
-    </div>
+    </AdminModal>
   );
 };
 

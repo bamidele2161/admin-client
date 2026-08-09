@@ -2,7 +2,8 @@ import React, { useState, useMemo } from "react";
 import DataTable from "react-data-table-component";
 import { Card } from "../../Cards/Cards";
 import { useGetVendorsReportQuery } from "../../../service/admin";
-import { Search, Store, ChevronDown } from "lucide-react";
+import { HiOutlineMagnifyingGlass, HiOutlineBuildingStorefront, HiOutlineChevronDown } from "react-icons/hi2";
+import { StatusBadge } from "../AdminUI";
 
 interface Vendor {
   id: number;
@@ -58,19 +59,6 @@ const VendorsTable: React.FC = () => {
     }).format(amount);
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "APPROVED":
-        return "bg-green-100 text-green-800 border-green-200";
-      case "PENDING":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200";
-      case "REJECTED":
-        return "bg-red-100 text-red-800 border-red-200";
-      default:
-        return "bg-gray-100 text-gray-800 border-gray-200";
-    }
-  };
-
   const columns = [
     {
       name: "Business Name",
@@ -78,9 +66,7 @@ const VendorsTable: React.FC = () => {
       cell: (row: Vendor) => (
         <div className="flex items-center">
           <div className="flex-shrink-0 h-8 w-8">
-            <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center">
-              <Store className="h-4 w-4 text-pryColor" />
-            </div>
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#DCE4E8]"><HiOutlineBuildingStorefront size={16} /></div>
           </div>
           <div className="ml-3">
             <div className="text-sm font-medium text-gray-900">
@@ -95,13 +81,7 @@ const VendorsTable: React.FC = () => {
       name: "Status",
       selector: (row: Vendor) => row.status,
       cell: (row: Vendor) => (
-        <span
-          className={`px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(
-            row.status
-          )}`}
-        >
-          {row.status}
-        </span>
+        <StatusBadge value={row.status} />
       ),
       sortable: true,
     },
@@ -122,7 +102,7 @@ const VendorsTable: React.FC = () => {
       selector: (row: Vendor) => row.totalEarnings,
       format: (row: Vendor) => formatCurrency(row.totalEarnings),
       cell: (row: Vendor) => (
-        <span className="text-green-600 font-medium">
+        <span className="font-semibold text-pryColor">
           {formatCurrency(row.totalEarnings)}
         </span>
       ),
@@ -155,7 +135,7 @@ const VendorsTable: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Card className="p-6">
+    <Card className="admin-panel">
         <div className="animate-pulse">
           <div className="h-6 bg-gray-200 rounded w-48 mb-4"></div>
           <div className="h-10 bg-gray-200 rounded mb-4"></div>
@@ -171,7 +151,7 @@ const VendorsTable: React.FC = () => {
 
   if (error) {
     return (
-      <Card className="p-6">
+      <Card className="admin-panel">
         <div className="text-center py-8">
           <p className="text-red-500">Error loading vendors data</p>
         </div>
@@ -180,16 +160,11 @@ const VendorsTable: React.FC = () => {
   }
 
   return (
-    <div className="p-6 border shadow-default rounded-lg ">
+    <div className="admin-panel">
       <div className="mb-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-5 flex items-end justify-between gap-4">
           <div>
-            <h3 className="text-lg font-semibold text-gray-900">
-              Vendors Report
-            </h3>
-            <p className="text-sm text-gray-500">
-              Complete vendor performance overview
-            </p>
+            <p className="text-[10px] font-bold uppercase tracking-[.18em] text-secColor">Detailed ledger</p><h3 className="mt-1 font-spaceGrotesk text-2xl font-semibold tracking-tight">Vendor performance</h3><p className="mt-1 text-sm text-lightGreyColor">Revenue and earnings across every vendor.</p>
           </div>
           <div className="text-sm text-gray-500">
             Total: {data.vendors.length} vendors
@@ -198,7 +173,7 @@ const VendorsTable: React.FC = () => {
 
         {/* Search Input */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+          <HiOutlineMagnifyingGlass className="absolute left-4 top-1/2 -translate-y-1/2 text-lightGreyColor" size={18} />
           <input
             type="text"
             placeholder="Search by business name..."
@@ -216,10 +191,10 @@ const VendorsTable: React.FC = () => {
         customStyles={customStyles}
         highlightOnHover
         responsive
-        sortIcon={<ChevronDown size={16} />}
+        sortIcon={<HiOutlineChevronDown size={16} />}
         noDataComponent={
           <div className="text-center py-8">
-            <Store className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+            <HiOutlineBuildingStorefront className="mx-auto mb-4 text-gray-400" size={36} />
             <p className="text-gray-500">
               {searchTerm
                 ? `No vendors found matching "${searchTerm}"`

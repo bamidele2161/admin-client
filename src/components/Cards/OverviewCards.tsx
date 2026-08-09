@@ -1,4 +1,4 @@
-import { ShoppingCart, DollarSign, Package, Star } from "lucide-react";
+import { HiOutlineShoppingBag as ShoppingCart, HiOutlineBanknotes as DollarSign, HiOutlineCube as Package, HiOutlineStar as Star } from "react-icons/hi2";
 import { Card } from "./Cards";
 
 import {

@@ -1,12 +1,6 @@
 import React from "react";
 import { useGetFinancialSummaryQuery } from "../../../service/admin";
-import {
-  BikeIcon,
-  DollarSign,
-  ListOrderedIcon,
-  UserCog2Icon,
-  UserIcon,
-} from "lucide-react";
+import { HiOutlineBanknotes, HiOutlineTruck, HiOutlineShoppingBag, HiOutlineBuildingStorefront, HiOutlineReceiptPercent, HiOutlineWallet } from "react-icons/hi2";
 
 interface FinancialData {
   totalRevenue: number;
@@ -37,7 +31,6 @@ const FinancialSummary: React.FC = () => {
   }
 
   const financialData: FinancialData = data?.data;
-  console.log(financialData);
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-NG", {
       style: "currency",
@@ -54,54 +47,54 @@ const FinancialSummary: React.FC = () => {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       }).format(financialData?.totalRevenue || 0),
-      icon: DollarSign,
+      icon: HiOutlineBanknotes,
       color: "bg-green",
     },
     {
       title: "Ashobox Fees",
       value: formatCurrency(financialData?.ashoboxFees || 0),
-      icon: DollarSign,
+      icon: HiOutlineReceiptPercent,
       color: "bg-blue",
     },
     {
       title: "Logistics Fees",
       value: formatCurrency(financialData?.logisticsFees || 0),
-      icon: BikeIcon,
+      icon: HiOutlineTruck,
       color: "bg-orange",
     },
     {
       title: "Vendor Earnings",
       value: formatCurrency(financialData?.vendorEarnings || 0),
-      icon: UserIcon,
+      icon: HiOutlineWallet,
       color: "bg-purple",
     },
     {
       title: "Total Orders",
       value: financialData?.totalOrders?.toString() || "0",
-      icon: ListOrderedIcon,
+      icon: HiOutlineShoppingBag,
       color: "bg-indigo",
     },
     {
       title: "Active Vendors",
       value: financialData?.activeVendors?.toString() || "0",
-      icon: UserCog2Icon,
+      icon: HiOutlineBuildingStorefront,
       color: "bg-teal",
     },
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 lg:gap-4">
       {cards.map((card, index) => (
         <div
           key={index}
-          className={`p-6 ${card.color}-50 shadow-sm rounded-lg`}
+          className={`admin-stat min-w-0 ${index === 0 ? "!bg-pryColor text-white" : ""}`}
         >
           <div className={`flex  items-center justify-between`}>
             <div>
-              <p className="text-sm font-medium text-gray-600">{card.title}</p>
-              <p className="text-2xl font-bold text-pryColor">{card.value}</p>
+              <p className={`admin-stat-label ${index === 0 ? "!text-white/45" : ""}`}>{card.title}</p>
+              <p className={`admin-stat-value break-words ${index === 0 ? "!text-white" : ""}`}>{card.value}</p>
             </div>
-            <div className={`p-3 rounded-full text-xl`}>{<card.icon />}</div>
+            <div className={`hidden rounded-full p-3 text-xl sm:block ${index === 0 ? "bg-white/10" : "bg-[#DCE4E8]"}`}><card.icon size={18}/></div>
           </div>
         </div>
       ))}

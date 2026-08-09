@@ -1,6 +1,6 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
-import { Check, X, Eye, AlertCircle, ChevronDown } from "lucide-react";
+import { HiOutlineExclamationCircle as AlertCircle, HiOutlineChevronDown as ChevronDown } from "react-icons/hi2";
 import {
   useGetAllProductCategoryQuery,
   useUpdateProductTagsMutation,
@@ -9,6 +9,7 @@ import { useGetAllProductsQuery } from "../../../service/admin";
 import { toast } from "react-toastify";
 import { useUpdateProductMutation } from "../../../service/admin";
 import ProductModerationModal from "./ProductModerationModal";
+import { ActionButton, StatusBadge } from "../AdminUI";
 
 function ProductModeration() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -139,6 +140,10 @@ function ProductModeration() {
       sortable: true,
     },
     {
+      name: "Status",
+      cell: (row: any) => <StatusBadge value={row.status === "Active" ? "Pending" : row.status} />,
+    },
+    {
       name: "Submitted",
       selector: (row: any) => row.createdAt.slice(0, 10),
       sortable: true,
@@ -146,31 +151,7 @@ function ProductModeration() {
     {
       name: "Actions",
       cell: (row: any) => (
-        <div className="flex justify-center items-center">
-          <button
-            onClick={() => handleAction(row, "view")}
-            className="p-1 rounded text-pryColor hover:bg-white"
-          >
-            <Eye size={16} />
-          </button>
-          {row?.status !== "Approved" && (
-            <button
-              onClick={() => handleAction(row, "approve")}
-              className="p-1 rounded text-positive hover:bg-green-300"
-            >
-              <Check size={16} />
-            </button>
-          )}
-
-          {row?.status !== "Rejected" && (
-            <button
-              onClick={() => handleAction(row, "reject")}
-              className="p-1 rounded text-negative hover:bg-red-300"
-            >
-              <X size={16} />
-            </button>
-          )}
-        </div>
+        <ActionButton onClick={() => handleAction(row, "view")} label={`Open actions for ${row.name}`} />
       ),
     },
   ];
@@ -209,7 +190,7 @@ function ProductModeration() {
 
   console.log(selectedProduct);
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="admin-panel">
       <div className="flex flex-col md:flex-row justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-greyColr mb-4 md:mb-0">
           Product Moderation
@@ -280,6 +261,7 @@ function ProductModeration() {
           onClose={() => setShowModal(false)}
           onPrimaryAction={handleModalAction}
           isPrimaryLoading={isLoading}
+          onChooseAction={(action) => setModalAction(action)}
         />
       )}
     </div>

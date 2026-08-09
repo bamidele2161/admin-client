@@ -1,4 +1,4 @@
-import { Plus, Eye } from "lucide-react";
+import { HiOutlinePlus as Plus, HiOutlineEye as Eye } from "react-icons/hi2";
 import { useNavigate } from "react-router-dom";
 
 const QuickAction = () => {

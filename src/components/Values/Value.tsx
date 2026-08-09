@@ -1,4 +1,4 @@
-import { Truck, Headphones, Shield } from "lucide-react";
+import { HiOutlineTruck as Truck, HiOutlineChatBubbleLeftRight as Headphones, HiOutlineShieldCheck as Shield } from "react-icons/hi2";
 
 const features = [
   {

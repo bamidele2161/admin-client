@@ -1,5 +1,5 @@
 import React from "react";
-import { Edit, Trash2, Image, Layout } from "lucide-react";
+import { HiOutlinePencilSquare as Edit, HiOutlineTrash as Trash2, HiOutlinePhoto as Image, HiOutlineRectangleGroup as Layout } from "react-icons/hi2";
 
 interface Promotion {
   id: string | number;

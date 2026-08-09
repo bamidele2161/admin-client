@@ -4,7 +4,7 @@ import ActivityLogsTable from "../../../components/AdminComponent/activity/Activ
 
 const ActivityLogsManagement: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Navbar
         title="Activity Logs"
         subtitle="Monitor system activities and audit trail"

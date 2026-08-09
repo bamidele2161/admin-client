@@ -1,12 +1,12 @@
 import { useState } from "react";
 import DataTable from "react-data-table-component";
-import { Check, X, Eye } from "lucide-react";
 import {
   useGetAllVendorsQuery,
   useUpdateVendorMutation,
 } from "../../../service/admin";
 import { toast } from "react-toastify";
 import Spinner from "../../Spinner/Spinner";
+import { ActionButton, StatusBadge } from "../AdminUI";
 
 // Sample data - in a real app, this would come from your Redux/API
 // const pendingVendors = [
@@ -140,26 +140,7 @@ const VendorApproval = () => {
     },
     {
       name: "Status",
-      selector: (row: any) => (
-        <span
-          className={`
-        px-3 py-1 rounded-full text-xs font-semibold
-        ${
-          row?.status === "PENDING"
-            ? "bg-yellow-100 text-yellow-700"
-            : row?.status === "APPROVED"
-            ? "bg-green-100 text-green-700"
-            : row?.status === "REJECTED"
-            ? "bg-orange-100 text-orange-700"
-            : row?.status === "INACTIVE"
-            ? "bg-red-100 text-red-700"
-            : "bg-gray-100 text-gray-700"
-        }
-      `}
-        >
-          {row?.status || "Unknown"}
-        </span>
-      ),
+      cell: (row: any) => <StatusBadge value={row?.status} />,
     },
     {
       name: "Applied On",
@@ -169,31 +150,7 @@ const VendorApproval = () => {
     {
       name: "Actions",
       cell: (row: any) => (
-        <div className="flex space-x-2">
-          <button
-            onClick={() => handleAction(row, "view")}
-            className="p-1 rounded text-pryColor hover:bg-pryColor"
-          >
-            <Eye size={16} />
-          </button>
-          {row?.status !== "APPROVED" && (
-            <button
-              onClick={() => handleAction(row, "approve")}
-              className="p-1 rounded text-positive hover:bg-positive"
-            >
-              <Check size={16} />
-            </button>
-          )}
-
-          {row?.status !== "REJECTED" && (
-            <button
-              onClick={() => handleAction(row, "reject")}
-              className="p-1 rounded text-negative hover:bg-negative"
-            >
-              <X size={16} />
-            </button>
-          )}
-        </div>
+        <ActionButton onClick={() => handleAction(row, "view")} label={`Open actions for ${row.businessName}`} />
       ),
     },
   ];
@@ -222,7 +179,7 @@ const VendorApproval = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="admin-panel">
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-semibold text-greyColr">
           Pending Vendor Approvals
@@ -357,6 +314,7 @@ const VendorApproval = () => {
                   )}
                 </button>
               )}
+              {modalAction === "view" && <><button onClick={() => setModalAction("approve")} className="rounded-full bg-pryColor px-5 py-2.5 text-sm font-semibold text-white">Approve</button><button onClick={() => setModalAction("reject")} className="rounded-full bg-red-50 px-5 py-2.5 text-sm font-semibold text-red-700">Reject</button></>}
             </div>
           </div>
         </div>

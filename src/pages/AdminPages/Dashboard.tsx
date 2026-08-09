@@ -9,17 +9,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import {
-  Activity,
-  Clock,
-  User,
-  AlertTriangle,
-  CheckCircle,
-  Users,
-  Store,
-  ShoppingCart,
-  ArrowRight,
-} from "lucide-react";
+import { HiOutlineQueueList as Activity, HiOutlineClock as Clock, HiOutlineUser as User, HiOutlineExclamationTriangle as AlertTriangle, HiOutlineCheckCircle as CheckCircle, HiOutlineUsers as Users, HiOutlineBuildingStorefront as Store, HiOutlineShoppingBag as ShoppingCart, HiOutlineArrowRight as ArrowRight } from "react-icons/hi2";
 import Navbar from "../../components/Navbar/Navbar";
 import { useGetAllUsersQuery } from "../../service/auth";
 import {
@@ -90,33 +80,16 @@ const AdminDashboard = () => {
   const getActivityIcon = (action: string) => {
     const actionLower = action.toLowerCase();
     if (actionLower.includes("login") || actionLower.includes("auth")) {
-      return <User className="w-4 h-4 text-blue-500" />;
+      return <User className="h-4 w-4 text-[#6F8294]" />;
     } else if (actionLower.includes("create") || actionLower.includes("add")) {
-      return <CheckCircle className="w-4 h-4 text-green-500" />;
+      return <CheckCircle className="h-4 w-4 text-emerald-700" />;
     } else if (
       actionLower.includes("delete") ||
       actionLower.includes("remove")
     ) {
-      return <AlertTriangle className="w-4 h-4 text-red-500" />;
+      return <AlertTriangle className="h-4 w-4 text-red-700" />;
     } else {
-      return <Activity className="w-4 h-4 text-gray-500" />;
-    }
-  };
-
-  // Function to get activity color based on action type
-  const getActivityColor = (action: string) => {
-    const actionLower = action.toLowerCase();
-    if (actionLower.includes("login") || actionLower.includes("auth")) {
-      return "border-blue-500";
-    } else if (actionLower.includes("create") || actionLower.includes("add")) {
-      return "border-green-500";
-    } else if (
-      actionLower.includes("delete") ||
-      actionLower.includes("remove")
-    ) {
-      return "border-red-500";
-    } else {
-      return "border-gray-400";
+      return <Activity className="h-4 w-4 text-[#566170]" />;
     }
   };
 
@@ -180,60 +153,45 @@ const AdminDashboard = () => {
 
   return (
     <div className="flex flex-col">
-      <Navbar title="Admin Dashboard" subtitle="Manage your products here" />
+      <Navbar title="Overview" subtitle="A live view of your marketplace operations" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 my-8 px-10">
+      <div className="my-7 grid grid-cols-2 gap-3 px-10 lg:grid-cols-4 lg:gap-4">
         {/* Summary Cards */}
-        <div className="bg-secColor-Light p-4 rounded-lg shadow-default">
-          <h3 className="text-sm font-medium text-lightGreyColor">
+        <div className="rounded-[1.5rem] border border-black/[.08] bg-pryColor p-5 text-white shadow-default sm:p-6">
+          <h3 className="text-[10px] font-bold uppercase tracking-[.16em] text-white/50">
             Total Users
           </h3>
-          <p className="text-2xl font-bold text-greyColr">
+          <p className="mt-4 font-spaceGrotesk text-3xl font-semibold tracking-tight sm:text-4xl">
             {users?.data?.length || 0}{" "}
           </p>
-          <div className="flex items-center mt-2">
-            <span className="text-positive-DEFAULT text-sm">+12%</span>
-            <span className="text-xs text-lightGreyColor ml-2">
-              vs last month
-            </span>
-          </div>
+          <p className="mt-2 text-xs text-white/45">Registered accounts</p>
         </div>
 
-        <div className="bg-positive-Light p-4 rounded-lg shadow-default">
-          <h3 className="text-sm font-medium text-lightGreyColor">
+        <div className="rounded-[1.5rem] border border-black/[.08] bg-[#DCE4E8] p-5 sm:p-6">
+          <h3 className="text-[10px] font-bold uppercase tracking-[.16em] text-lightGreyColor">
             Active Vendors
           </h3>
-          <p className="text-2xl font-bold text-greyColr">
+          <p className="mt-4 font-spaceGrotesk text-3xl font-semibold tracking-tight sm:text-4xl">
             {data?.data?.length || 0}
           </p>
-          <div className="flex items-center mt-2">
-            <span className="text-positive-DEFAULT text-sm">+5%</span>
-            <span className="text-xs text-lightGreyColor ml-2">
-              vs last month
-            </span>
-          </div>
+          <p className="mt-2 text-xs text-lightGreyColor">Vendor accounts</p>
         </div>
 
-        <div className="bg-negative-Light p-4 rounded-lg shadow-default">
-          <h3 className="text-sm font-medium text-lightGreyColor">
+        <div className="rounded-[1.5rem] border border-black/[.08] bg-white/70 p-5 sm:p-6">
+          <h3 className="text-[10px] font-bold uppercase tracking-[.16em] text-lightGreyColor">
             Total Orders
           </h3>
-          <p className="text-2xl font-bold text-greyColr">
+          <p className="mt-4 font-spaceGrotesk text-3xl font-semibold tracking-tight sm:text-4xl">
             {orders?.data?.length || 0}
           </p>
-          <div className="flex items-center mt-2">
-            <span className="text-positive-DEFAULT text-sm">+18%</span>
-            <span className="text-xs text-lightGreyColor ml-2">
-              vs last month
-            </span>
-          </div>
+          <p className="mt-2 text-xs text-lightGreyColor">All-time orders</p>
         </div>
 
-        <div className="bg-pryColor-Light p-4 rounded-lg shadow-default">
-          <h3 className="text-sm font-medium text-lightGreyColor">
+        <div className="rounded-[1.5rem] border border-black/[.08] bg-[#F8F7F3] p-5 sm:p-6">
+          <h3 className="text-[10px] font-bold uppercase tracking-[.16em] text-lightGreyColor">
             Total Revenue
           </h3>
-          <p className="text-2xl font-bold text-greyColr">
+          <p className="mt-4 font-spaceGrotesk text-xl font-semibold tracking-tight sm:text-3xl">
             {new Intl.NumberFormat("en-NG", {
               style: "currency",
               currency: "NGN",
@@ -241,18 +199,13 @@ const AdminDashboard = () => {
               maximumFractionDigits: 2,
             }).format(totalRevenue || 0)}
           </p>
-          <div className="flex items-center mt-2">
-            <span className="text-positive-DEFAULT text-sm">+8%</span>
-            <span className="text-xs text-lightGreyColor ml-2">
-              vs last month
-            </span>
-          </div>
+          <p className="mt-2 text-xs text-lightGreyColor">Gross order value</p>
         </div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 px-10 mb-6">
         {/* Sales Chart */}
-        <div className="w-full lg:w-[65%] bg-white p-6 rounded-lg shadow-default">
+        <div className="w-full rounded-[1.75rem] border border-black/[.08] bg-white/75 p-5 shadow-default sm:p-7 lg:w-[65%]">
           <h2 className="text-lg font-semibold mb-4 text-greyColr">
             Monthly Sales Revenue
           </h2>
@@ -288,9 +241,9 @@ const AdminDashboard = () => {
                 <Area
                   type="monotone"
                   dataKey="sales"
-                  stroke="#254A76"
-                  fill="#80BBEB"
-                  fillOpacity={0.6}
+                  stroke="#151A22"
+                  fill="#6F8294"
+                  fillOpacity={0.28}
                   strokeWidth={2}
                 />
               </AreaChart>
@@ -299,12 +252,9 @@ const AdminDashboard = () => {
         </div>
 
         {/* Recent Activity */}
-        <div className="w-full lg:w-[40%] bg-white p-6 rounded-lg shadow-default">
+        <div className="w-full rounded-[1.75rem] border border-black/[.08] bg-[#DCE4E8] p-5 sm:p-7 lg:w-[40%]">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-greyColr flex items-center gap-2">
-              <Activity className="w-5 h-5 text-pryColor-DEFAULT" />
-              Recent Activity
-            </h2>
+            <div><p className="text-[10px] font-bold uppercase tracking-[.16em] text-lightGreyColor">Live audit trail</p><h2 className="mt-1 font-spaceGrotesk text-xl font-semibold tracking-tight text-greyColr">Recent activity</h2></div>
             <Link
               to="/admin-activity-logs"
               className="text-sm text-pryColor-DEFAULT hover:text-pryColor-Dark transition-colors"
@@ -328,43 +278,27 @@ const AdminDashboard = () => {
               ))}
             </div>
           ) : recentActivities.length > 0 ? (
-            <div className="space-y-4">
+            <ol className="divide-y divide-black/[.09] border-y border-black/[.09]">
               {recentActivities.map((activity: ActivityLog) => (
-                <div
-                  key={activity.id}
-                  className="group hover:bg-gray-50 rounded-lg transition-colors"
-                >
-                  <div className="flex items-start gap-3">
-                    <div
-                      className={`flex-shrink-0 w-8 h-8 rounded-full ${getActivityColor(
-                        activity.action
-                      )} bg-white flex items-center justify-center`}
-                    >
+                <li key={activity.id} className="grid grid-cols-[2rem_1fr] gap-3 py-4">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-white/70 text-pryColor">
                       {getActivityIcon(activity.action)}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between">
-                        <p className="font-medium text-greyColr text-sm truncate">
-                          {activity.action}
-                        </p>
-                        <div className="flex items-center gap-1 text-xs text-lightGreyColor">
-                          <Clock className="w-3 h-3" />
-                          {formatTimeAgo(activity.createdAt)}
+                    <div className="min-w-0">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="truncate text-sm font-semibold text-greyColr">{activity.action.replace(/_/g, " ")}</p>
+                          <p className="mt-0.5 truncate text-[11px] font-medium text-lightGreyColor">{activity.user?.fullName || "System activity"}</p>
                         </div>
+                        <time className="flex shrink-0 items-center gap-1 whitespace-nowrap text-[10px] font-medium text-lightGreyColor">
+                          <Clock className="h-3 w-3" />{formatTimeAgo(activity.createdAt)}
+                        </time>
                       </div>
-                      <p className="text-xs text-lightGreyColor mt-1 line-clamp-2">
-                        {activity.details}
-                      </p>
-                      <div className="flex items-center gap-2 mt-2 text-[10px] text-lightGreyColor">
-                        <span className="px-2 py-1 bg-gray-100 rounded-full">
-                          {activity.user?.fullName}
-                        </span>
-                      </div>
+                      <p className="mt-2 line-clamp-2 text-xs leading-5 text-[#566170]">{activity.details}</p>
                     </div>
-                  </div>
-                </div>
+                </li>
               ))}
-            </div>
+            </ol>
           ) : (
             <div className="text-center py-8">
               <Activity className="w-12 h-12 text-gray-300 mx-auto mb-3" />
@@ -381,14 +315,14 @@ const AdminDashboard = () => {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <Link
-            to="/admin/users"
-            className="group relative overflow-hidden bg-gradient-to-br from-blue-300 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            to="/admin-customer-management"
+            className="group relative overflow-hidden rounded-[1.5rem] bg-pryColor p-6 text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#242B35]"
           >
             <div className="flex items-center justify-between">
               <div>
                 <Users className="w-8 h-8 mb-3" />
                 <h4 className="text-lg font-semibold">User Management</h4>
-                <p className="text-blue-100 text-sm mt-1">Manage all users</p>
+                <p className="mt-1 text-sm text-white/55">Manage all users</p>
               </div>
               <ArrowRight className="w-5 h-5 opacity-0 group-hover:opacity-100 transform translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
             </div>
@@ -396,14 +330,14 @@ const AdminDashboard = () => {
           </Link>
 
           <Link
-            to="/admin/vendors"
-            className="group relative overflow-hidden bg-gradient-to-br from-emerald-300 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            to="/admin-vendor"
+            className="group relative overflow-hidden rounded-[1.5rem] bg-[#6F8294] p-6 text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#5f7181]"
           >
             <div className="flex items-center justify-between">
               <div>
                 <Store className="w-8 h-8 mb-3" />
                 <h4 className="text-lg font-semibold">Vendor Management</h4>
-                <p className="text-emerald-100 text-sm mt-1">
+                <p className="mt-1 text-sm text-white/65">
                   Manage all vendors
                 </p>
               </div>
@@ -414,13 +348,13 @@ const AdminDashboard = () => {
 
           <Link
             to="/admin-order-management"
-            className="group relative overflow-hidden bg-gradient-to-br from-purple-300 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white rounded-xl p-6 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+            className="group relative overflow-hidden rounded-[1.5rem] border border-black/[.08] bg-[#F8F7F3] p-6 text-pryColor transition-all duration-300 hover:-translate-y-0.5 hover:bg-white"
           >
             <div className="flex items-center justify-between">
               <div>
                 <ShoppingCart className="w-8 h-8 mb-3" />
                 <h4 className="text-lg font-semibold">Order Management</h4>
-                <p className="text-purple-100 text-sm mt-1">
+                <p className="mt-1 text-sm text-lightGreyColor">
                   Manage all orders
                 </p>
               </div>

@@ -9,22 +9,17 @@ const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
     setCollapsed((prev) => !prev);
   };
   return (
-    <main className="w-full gap-8 flex flex-col bg-white">
-      <div className="flex">
+    <main className="admin-shell min-h-screen w-full bg-pryColor-Lighter">
+      <div className="min-w-0">
         <section
-          className={`fixed left-0 top-0 transition-all duration-300 ${
+          className={`fixed inset-y-0 left-0 z-50 hidden transition-[width] duration-300 lg:block ${
             collapsed ? "w-20" : "w-64"
-          } min-h-screen border-r bg-[#254A76]`}
+          }`}
         >
           <Sidebar collapsed={collapsed} toggleSidebar={toggleSidebar} />{" "}
         </section>
 
-        <aside
-          style={{
-            marginLeft: collapsed ? "5rem" : "16rem",
-          }}
-          className="w-full overflow-y-auto bg-pryColor-Lighter transition-all duration-300"
-        >
+        <aside className={`min-h-screen min-w-0 overflow-x-hidden bg-pryColor-Lighter transition-[margin] duration-300 ${collapsed ? "lg:ml-20" : "lg:ml-64"}`}>
           {children}
         </aside>
       </div>

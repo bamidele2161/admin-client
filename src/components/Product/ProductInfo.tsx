@@ -1,4 +1,4 @@
-import { EyeIcon } from "lucide-react";
+import { HiOutlineEye as EyeIcon } from "react-icons/hi2";
 import React from "react";
 
 interface ProductInfoProps {
